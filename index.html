@@ -1,10 +1,24 @@
 <html>
     <head>
         <title>Visualization</title>
+        <link rel="stylesheet" href="style.css" type="text/css">
     </head>
     <body>
         <h1>Hello</h1>
         <p>Implement something here</p>
         <p>TEST</p>
+        <div style="height: 300px">
+            <h3>Accidents per road type</h3>
+            <canvas id="pieChart" width="200" height="200"></canvas>
+        </div>
+        <div style="height: 300px">
+            <h3>Accidents per road type for each weather type</h3>
+            <canvas id="pieChart2" width="200" height="200"></canvas>
+        </div>
+        <h1><strong>Made by Jayin and Raphael</strong></h1>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.0/dist/chart.min.js"></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src='main.js'></script>
     </body>
 </html>
