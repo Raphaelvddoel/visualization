@@ -6,6 +6,8 @@ var csvUrl = "https://raphaelvddoel.github.io/visualization/dataset.csv";
 var labels1 = ["Motorway", "A(M)", "A", "B", "C", "Unclassified"]; // in dataset 1,2,3,4,5,6
 var result1 = [0,0,0,0,0,0];
 var result2 = [0,0,0,0,0,0];
+var pieChart;
+var pieChart2;
 
 //initial activation function call
 init();
@@ -103,15 +105,23 @@ async function pieChart(){
 }
 
 /* ---------- end piechart function ---------- */
+function updateSecondPieChart() {
+    result2 = [0,0,0,0,0,0];
+    typeChosen = document.getElementById("sliderWeather").value;
+    setDataAccidentRoadClassPerWeather(typeChosen);
+    pieChart2.data.datasets[0].data = result2;
+    pieChart2.update();
+    document.getElementById('selectedWeather').innerHTML = typeChosen;
+}
 
 /* --------- start pie chart function --------*/
-function setDataAccidentRoadClassPerWeather() {
+function setDataAccidentRoadClassPerWeather(selectedType = 5) {
     let firstRow = table[0];
     table.forEach( row => {
         let columns = row.split(','); 
         const road_class = columns[14];
         const weather_type = columns[getIndex("Weather_Conditions")];
-        if (weather_type == "7") {
+        if (weather_type == selectedType) {
             result2[parseInt(road_class) - 1]++;
         }
     });
@@ -126,7 +136,7 @@ async function pieChart2(){
     
     const ctx = document.getElementById('pieChart2').getContext('2d');
     
-    pieChart = new Chart(ctx, {
+    pieChart2 = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: labels1,
@@ -145,16 +155,8 @@ async function pieChart2(){
                 borderWidth: 1
             }]
         },
-        // options: {
-        //     title: {
-        //       display: true,
-        //       text: 'Predicted world population (millions) in 2050'
-        //     }
-        //   }
         options:{
             maintainAspectRatio: false,
-            //responsive: true,
-            
             scales: {
                 y: {
                     display: false

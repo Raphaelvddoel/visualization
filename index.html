@@ -13,6 +13,12 @@
         </div>
         <div style="height: 300px">
             <h3>Accidents per road type for each weather type</h3>
+            <h5>slider</h5>
+            <label for="sliderWeather">Slide for weather type</label>
+            <input type="range" id="sliderWeather" name="sliderWeather" min="1" max="8">
+            <br>
+            <button onclick="updateSecondPieChart()">Update chart</button><br>
+            <p>Element chosen: </p><p id="selectedWeather">5</p>
             <canvas id="pieChart2" width="200" height="200"></canvas>
         </div>
         <h1><strong>Made by Jayin and Raphael</strong></h1>
