@@ -9,6 +9,40 @@ var result2 = [0,0,0,0,0,0];
 var pieChart;
 var pieChart2;
 
+//variables for barchart 1
+var labels2 = ['Pedestrian', 
+'Cyclist',
+'Motorcycle 50cc and under rider or passenger',
+'Motorcycle 125cc and under rider or passenger',
+'Motorcycle over 125cc and up to 500cc rider or  passenger',
+'Motorcycle over 500cc rider or passenger',
+'Taxi/Private hire car occupant',
+'Car occupant',
+'Minibus (8 - 16 passenger seats) occupant',
+'Bus or coach occupant (17 or more pass seats)',
+'Horse rider',
+'Agricultural vehicle occupant',
+'Tram occupant',
+'Van / Goods vehicle (3.5 tonnes mgw or under) occupant',
+'Goods vehicle (over 3.5t. and under 7.5t.) occupant',
+'Goods vehicle (7.5 tonnes mgw and over) occupant',
+'Mobility scooter rider',
+'Electric motorcycle rider or passenger',
+'Other vehicle occupant',
+'Motorcycle - unknown cc rider or passenger',
+'Goods vehicle (unknown weight) occupant',
+'Unknown vehicle type (self rep only)',
+'Motorcycle - Scooter (1979-1998)',
+'Motorcycle (1979-1998)',
+'Motorcycle - Combination (1979-1998)',
+'Motorcycle over 125cc (1999-2004)',
+'Taxi (excluding private hire cars) (1979-2004)',
+'Car (including private hire cars) (1979-2004)',
+'Minibus/Motor caravan (1979-1998)',
+'Goods over 3.5 tonnes (1979-1998)'];
+
+var result3 = [0,0,0,0,0,0];
+var barChart1;
 //initial activation function call
 init();
 
@@ -32,6 +66,7 @@ async function init() {
     await getData();
     pieChart();
     pieChart2();
+    barChart();
 }
 async function getData(){ 
     const response = await fetch(csvUrl);
@@ -157,6 +192,7 @@ async function pieChart2(){
         },
         options:{
             maintainAspectRatio: false,
+            legend: { display: false },
             scales: {
                 y: {
                     display: false
@@ -173,4 +209,69 @@ async function pieChart2(){
     });
 }
 
+
 /* ---------- end piechart function ---------- */
+/* ---------- Start stacked bar chart function ---------- */
+
+function setDataAccidentRoadClass(selectedType = 5) {
+
+    table.forEach( row => {
+        let columns = row.split(','); 
+        const road_class = columns[14];
+        const casualty_type = columns[getIndex("Casualty_Type")];
+        if (casualty_type == selectedType) {
+            result3[parseInt(road_class) - 1]++;
+        }
+    });
+}
+
+function updateBarChart() {
+    result3 = [0,0,0,0,0,0];
+    let select = document.getElementById("selectUser");
+    let typeChosen = select.options[select.selectedIndex].value;
+    console.log(typeChosen);
+    setDataAccidentRoadClass(typeChosen);
+    barChart1.data.datasets[0].data = result3;
+    barChart1.update();
+    document.getElementById('selectedUser').innerHTML = typeChosen;
+    console.log(result3);
+}
+
+async function barChart(){
+    await setDataAccidentRoadClassPerWeather();
+    
+    const ctx = document.getElementById('barChart1').getContext('2d');
+    
+    barChart1 = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels1,
+            datasets: [
+              {
+                label: "Amount of accidents",
+                backgroundColor: [
+                    'rgba(0, 37, 255, 0.6)',        //1
+                    'rgba(0, 231, 226, 0.5)',       //2
+                    'rgba(116, 255, 147, 1)',       //3
+                    'rgba(245, 40, 145, 0.8)',      //4
+                    'rgba(157, 146, 152, 0.8)',     //5
+                    'rgba(110, 44, 20, 0.8)',       //6
+                ],
+                data: result3,
+              }
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'bar chart'
+              },
+            }
+        }
+        
+    });
+}
+
+/* ---------- End stacked bar chart function ---------- */
