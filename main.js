@@ -211,9 +211,9 @@ async function pieChart2(){
 
 
 /* ---------- end piechart function ---------- */
-/* ---------- Start stacked bar chart function ---------- */
+/* ---------- Start bar chart function ---------- */
 
-function setDataAccidentRoadClass(selectedType = 5) {
+function setDataAccidentRoadClassPerUser(selectedType = 5) {
 
     table.forEach( row => {
         let columns = row.split(','); 
@@ -230,7 +230,7 @@ function updateBarChart() {
     let select = document.getElementById("selectUser");
     let typeChosen = select.options[select.selectedIndex].value;
     console.log(typeChosen);
-    setDataAccidentRoadClass(typeChosen);
+    setDataAccidentRoadClassPerUser(typeChosen);
     barChart1.data.datasets[0].data = result3;
     barChart1.update();
     document.getElementById('selectedUser').innerHTML = typeChosen;
@@ -238,7 +238,7 @@ function updateBarChart() {
 }
 
 async function barChart(){
-    await setDataAccidentRoadClassPerWeather();
+    await setDataAccidentRoadClassPerUser();
     
     const ctx = document.getElementById('barChart1').getContext('2d');
     
@@ -274,4 +274,4 @@ async function barChart(){
     });
 }
 
-/* ---------- End stacked bar chart function ---------- */
+/* ---------- End bar chart function ---------- */
