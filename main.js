@@ -9,6 +9,10 @@ var result2 = [0,0,0,0,0,0];
 var pieChart;
 var pieChart2;
 
+//Variables for chart editor
+var selectedChartLeft = 'pieChart1';
+var selectedChartRight = 'barChart1';
+
 //variables for barchart 1
 var labels2 = ['Pedestrian', 
 'Cyclist',
@@ -64,9 +68,9 @@ function getIndex(item){
 
 async function init() {
     await getData();
-    pieChart();
-    pieChart2();
-    barChart();
+    pieChart1('chartLeft');
+    //pieChart2();
+    barChart1('chartRight');
 }
 async function getData(){ 
     const response = await fetch(csvUrl);
@@ -89,12 +93,12 @@ function setDataAccidentRoadClass() {
     console.log(parseInt(elem[14])); */
 }
 
-async function pieChart(){
+async function pieChart1(canvas){
     await setDataAccidentRoadClass();
     
-    const ctx = document.getElementById('pieChart').getContext('2d');
+    const ctx = document.getElementById(canvas).getContext('2d');
     
-    pieChart = new Chart(ctx, {
+    pieChart1 = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: labels1,
@@ -162,10 +166,10 @@ function setDataAccidentRoadClassPerWeather(selectedType = 5) {
     });
 }
 
-async function pieChart2(){
+async function pieChart2(canvas){
     await setDataAccidentRoadClassPerWeather();
     
-    const ctx = document.getElementById('pieChart2').getContext('2d');
+    const ctx = document.getElementById(canvas).getContext('2d');
     
     pieChart2 = new Chart(ctx, {
         type: 'pie',
@@ -233,10 +237,10 @@ function updateBarChart() {
     console.log(result3);
 }
 
-async function barChart(){
+async function barChart1(canvas){
     await setDataAccidentRoadClassPerUser();
     
-    const ctx = document.getElementById('barChart1').getContext('2d');
+    const ctx = document.getElementById(canvas).getContext('2d');
     
     barChart1 = new Chart(ctx, {
         type: 'bar',
@@ -271,3 +275,89 @@ async function barChart(){
 }
 
 /* ---------- End bar chart function ---------- */
+
+/* ---------- Start of update graph functions ---------- */
+function updateLeftGraph() {
+    let select  = document.getElementById('selectLeftGraph')
+    let typeChosen = select.options[select.selectedIndex].value;
+    if (typeChosen == selectedChartRight) {
+        alert("can't select two of same graphs");
+    } else {
+        if (selectedChartLeft == 'pieChart1') {
+            pieChart1.destroy();
+        } else if (selectedChartLeft == 'pieChart2') {
+            pieChart2.destroy();
+        } else if (selectedChartLeft == 'barChart1') {
+            barChart1.destroy();
+        } else {
+            alert('selected type is not an option');
+        }
+        if (typeChosen == 'pieChart1') {
+            var1 = document.getElementById("selectorpieChart2Left").style.display = 'none';
+            var2 = document.getElementById("selectorBarChart1Left").style.display = 'none';
+            pieChart1('chartLeft');
+        } else if (typeChosen == 'pieChart2') {
+            var1 = document.getElementById("selectorpieChart2Left").style.display = 'inline';
+            var2 = document.getElementById("selectorBarChart1Left").style.display = 'none';
+            pieChart2('chartLeft');
+        } else if (typeChosen == 'barChart1') {
+            var1 = document.getElementById("selectorpieChart2Left").style.display = 'none';
+            var2 = document.getElementById("selectorBarChart1Left").style.display = 'inline';
+            barChart1('chartLeft');
+        } else {
+            alert('selected type is not an option');
+        }
+        var options = document.getElementById("selectRightGraph").getElementsByTagName("option");
+        for (var i = 0; i < options.length; i++) {
+             if (options[i].value == typeChosen) {
+                options[i].disabled = true;
+             } else {
+                options[i].disabled = false;
+             }
+        }
+        
+        selectedChartLeft = typeChosen;
+    }
+    
+}
+
+function updateRightGraph() {
+    let select  = document.getElementById('selectRightGraph')
+    let typeChosen = select.options[select.selectedIndex].value;
+    if (selectedChartRight == 'pieChart1') {
+        pieChart1.destroy();
+    } else if (selectedChartRight == 'pieChart2') {
+        pieChart2.destroy();
+    } else if (selectedChartRight == 'barChart1') {
+        barChart1.destroy();
+    } else {
+        alert('selected type is not an option');
+    }
+    if (typeChosen == 'pieChart1') {
+        var1 = document.getElementById("selectorpieChart2Right").style.display = 'none';
+        var2 = document.getElementById("selectorBarChart1Right").style.display = 'none';
+        pieChart1('chartRight');
+    } else if (typeChosen == 'pieChart2') {
+        var1 = document.getElementById("selectorpieChart2Right").style.display = 'inline';
+        var2 = document.getElementById("selectorBarChart1Right").style.display = 'none';
+        pieChart2('chartRight');
+    } else if (typeChosen == 'barChart1') {
+        var1 = document.getElementById("selectorpieChart2Right").style.display = 'none';
+        var2 = document.getElementById("selectorBarChart1Right").style.display = 'inline';
+        barChart1('chartRight');
+    } else {
+        alert('selected type is not an option');
+    }
+    var options = document.getElementById("selectLeftGraph").getElementsByTagName("option");
+    console.log(options);
+    for (var i = 0; i < options.length; i++) {
+         if (options[i].value == typeChosen) {
+            options[i].disabled = true;
+         } else {
+            options[i].disabled = false;
+         }
+    }
+    selectedChartRight = typeChosen;
+
+}
+/* ---------- End of update graph functions ---------- */

@@ -1,12 +1,68 @@
 <html>
     <head>
         <title>Visualization</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="style.css" type="text/css">
     </head>
     <body>
-        <h1>Hello</h1>
-        <p>Implement something here</p>
-        <p>TEST</p>
+        <div id="App" class="container-fluid">
+            <div class="row">
+                <div class="col-4 graphSelector left">
+                    <h3 class="infoTitle">Selector left viz</h3>
+                    <select name="selectLeftGraph" id="selectLeftGraph">
+                        <option value="pieChart1" selected>graph 1</option>
+                        <option value="pieChart2">graph 2</option>
+                        <option value="barChart1" disabled>graph 3</option>
+                    </select>
+                    <button onclick="updateLeftGraph()">Update</button>
+                    <br>
+                    <div id="selectorpieChart2Left">
+                        INSERT SELECTOR piechart2
+                    </div>
+                    <div id="selectorBarChart1Left">
+                        INSERT SELECTOR barchart 1
+                    </div>
+                </div>
+                <div class="col-4 appTitle">
+                    <h1 id="title">VizTech</h1>
+                </div>
+                <div class="col-4 graphSelector right">
+                    <h3 class="infoTitle">Selector right viz</h3>
+                    <select name="selectRightGraph" id="selectRightGraph">
+                        <option value="pieChart1" disabled>graph 1</option>
+                        <option value="pieChart2">graph 2</option>
+                        <option value="barChart1" selected>graph 3</option>
+                    </select>
+                    <button onclick="updateRightGraph()">Update</button>
+                    <br>
+                    <div id="selectorpieChart2Right">
+                        INSERT SELECTOR piechart2
+                    </div>
+                    <div id="selectorBarChart1Right">
+                        INSERT SELECTOR barchart1
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6" style="height: 300px">
+                    <h3 class="visTitle">viz 1</h3>
+                    <canvas id="chartLeft" width="200" height="200"></canvas>
+                </div>
+                <div class="col-6" style="height: 300px">
+                    <h3 class="visTitle">viz 2</h3>
+                    <canvas id="chartRight" width="200" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="footer" id="footer">
+            <p>
+                Made by Chris D'Mello, Raphael van den Doel, Jayin Nejal & Rutishkrishna Srinivasaraghavan
+                <br>
+                for JBI100 Visualization 21-22
+            </p>
+        </div>
         <div style="height: 300px">
             <h3>Accidents per road type</h3>
             <canvas id="pieChart" width="200" height="200"></canvas>
@@ -57,6 +113,9 @@
         <div style="height: 400px; width: 500px">
             <canvas id="barChart1" width="200" height="200"></canvas>
         </div>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.0/dist/chart.min.js"></script>
         <script src="https://d3js.org/d3.v4.min.js"></script>
