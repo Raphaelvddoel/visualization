@@ -64,7 +64,6 @@ function getIndex(item){
 
 async function init() {
     await getData();
-    await setInititalData();
     pieChart();
     pieChart2();
     barChart();
@@ -90,27 +89,8 @@ function setDataAccidentRoadClass() {
     console.log(parseInt(elem[14])); */
 }
 
-function setInititalData() {
-    table.forEach( row => {
-        let columns = row.split(','); 
-        const road_class        = columns[14];
-        const weather_type      = columns[getIndex("Weather_Conditions")];
-        const casualty_type = columns[getIndex("Casualty_Type")];
-        result1[parseInt(road_class) - 1]++;
-
-        if (weather_type == 5) {
-            result2[parseInt(road_class) - 1]++;
-        }
-
-        if (casualty_type == 5) {
-            result3[parseInt(road_class) - 1]++;
-        }
-
-    });
-}
-
 async function pieChart(){
-    //await setDataAccidentRoadClass();
+    await setDataAccidentRoadClass();
     
     const ctx = document.getElementById('pieChart').getContext('2d');
     
@@ -180,14 +160,10 @@ function setDataAccidentRoadClassPerWeather(selectedType = 5) {
             result2[parseInt(road_class) - 1]++;
         }
     });
-    /*let firstRow = table[0];
-    elem = firstRow.split(',')
-    console.log(elem[getIndex('Accident_Index')], elem[getIndex("Weather_Conditions")]);
-    console.log(parseInt(elem[14])); */
 }
 
 async function pieChart2(){
-    // await setDataAccidentRoadClassPerWeather();
+    await setDataAccidentRoadClassPerWeather();
     
     const ctx = document.getElementById('pieChart2').getContext('2d');
     
@@ -258,7 +234,7 @@ function updateBarChart() {
 }
 
 async function barChart(){
-    // await setDataAccidentRoadClassPerUser();
+    await setDataAccidentRoadClassPerUser();
     
     const ctx = document.getElementById('barChart1').getContext('2d');
     
