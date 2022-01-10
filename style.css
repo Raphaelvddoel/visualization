@@ -7,6 +7,11 @@ h3.infoTitle {
     text-align: center;
 }
 
+select { 
+    width: 200px; 
+    text-align: center; 
+}
+
 #title {
     text-align: center;
     border: 2px solid rgb(17, 17, 17);
@@ -16,6 +21,12 @@ h3.infoTitle {
 }
 
 #footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(14, 56, 75);
+    color: rgb(151, 145, 145);
     text-align: center;
 }
 

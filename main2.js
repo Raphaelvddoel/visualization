@@ -16,6 +16,13 @@ var rightChart;
 var selectedChartLeft = 'pieChart1';
 var selectedChartRight = 'barChart1';
 
+//Colorlists
+regList = ['rgba(102,144,252,255)', 'rgba(120,96,237,255)', 'rgba(218,36,127,255)', 'rgba(252,95,27,255)', 'rgba(253,175,37,255)', 'rgba(189,234,179,255)'];
+proList = ['rgba(96,144,252,255)','rgba(19,115,234,255)','rgba(102,116,165,255)','rgba(165,146,36,255)','rgba(214,189,41,255)','rgba(235,220,172,255)'];
+deuList = ['rgba(235,220,172,255)','rgba(18,122,204,255)','rgba(131,113,113,255)','rgba(186,138,25,255)','rgba(242,179,36,255)','rgba(254,213,186,255)'];
+triList = ['rgba(55,161,173,255)','rgba(81,125,134,255)','rgba(213,60,68,255)','rgba(253,91,100,255)','rgba(254,165,177,255)','rgba(200,224,241,255)'];
+colorSet = regList;
+
 //labels for charts
 var labels1 = ["Motorway", "A(M)", "A", "B", "C", "Unclassified"]; // in dataset 1,2,3,4,5,6
 var labels2 = ['Pedestrian', 
@@ -69,6 +76,7 @@ function getIndex(item){
 init();
 
 async function init() {
+    //await updateColors();
     await getData();
     await calcData();
     updateChart('chartLeft', 'pieChart1');
@@ -162,14 +170,7 @@ pieChart1 = {
         datasets: [{
             data: result1,
             fill: true,
-            backgroundColor: [
-                'rgba(0, 37, 255, 0.6)',        //1
-                'rgba(0, 231, 226, 0.5)',       //2
-                'rgba(116, 255, 147, 1)',       //3
-                'rgba(245, 40, 145, 0.8)',      //4
-                'rgba(157, 146, 152, 0.8)',     //5
-                'rgba(110, 44, 20, 0.8)',       //6
-            ],
+            backgroundColor: colorSet,
             borderColor: 'rgba(0, 0, 0, 0.4)',
             borderWidth: 1
         }]
@@ -197,14 +198,7 @@ pieChart2 = {
         datasets: [{
             data: result2,
             fill: true,
-            backgroundColor: [
-                'rgba(0, 37, 255, 0.6)',        //1
-                'rgba(0, 231, 226, 0.5)',       //2
-                'rgba(116, 255, 147, 1)',       //3
-                'rgba(245, 40, 145, 0.8)',      //4
-                'rgba(157, 146, 152, 0.8)',     //5
-                'rgba(110, 44, 20, 0.8)',       //6
-            ],
+            backgroundColor: colorSet,
             borderColor: 'rgba(0, 0, 0, 0.4)',
             borderWidth: 1
         }]
@@ -232,14 +226,7 @@ barChart1 = {
         datasets: [
             {
             label: "Amount of accidents",
-            backgroundColor: [
-                'rgba(0, 37, 255, 0.6)',        //1
-                'rgba(0, 231, 226, 0.5)',       //2
-                'rgba(116, 255, 147, 1)',       //3
-                'rgba(245, 40, 145, 0.8)',      //4
-                'rgba(157, 146, 152, 0.8)',     //5
-                'rgba(110, 44, 20, 0.8)',       //6
-            ],
+            backgroundColor: colorSet,
             data: result3,
             }
         ]
@@ -345,4 +332,11 @@ function updateBarChart1() {
         rightChart.update();
     }
     document.getElementById('selectedUser').innerHTML = typeChosen;
+}
+
+function updateColors() {
+    let selectColor  = document.getElementById('selectColor')
+    let colorChosen = selectColor.options[selectColor.selectedIndex].value;
+    colorSet = colorChosen;
+    console.log(colorSet);
 }

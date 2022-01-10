@@ -9,6 +9,12 @@ var result2 = [0,0,0,0,0,0];
 var pieChart;
 var pieChart2;
 
+//Colorlists
+regList = ['rgba(102,144,252,255)', 'rgba(120,96,237,255)', 'rgba(218,36,127,255)', 'rgba(252,95,27,255)', 'rgba(253,175,37,255)', 'rgba(189,234,179,255)'];
+proList = ['rgba(96,144,252,255)','rgba(19,115,234,255)','rgba(102,116,165,255)','rgba(165,146,36,255)','rgba(214,189,41,255)','rgba(235,220,172,255)'];
+deuList = ['rgba(235,220,172,255)','rgba(18,122,204,255)','rgba(131,113,113,255)','rgba(186,138,25,255)','rgba(242,179,36,255)','rgba(254,213,186,255)'];
+triList = ['rgba(55,161,173,255)','rgba(81,125,134,255)','rgba(213,60,68,255)','rgba(253,91,100,255)','rgba(254,165,177,255)','rgba(200,224,241,255)'];
+
 //Variables for chart editor
 var selectedChartLeft = 'pieChart1';
 var selectedChartRight = 'barChart1';

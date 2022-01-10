@@ -27,6 +27,12 @@
                 </div>
                 <div class="col-4 appTitle">
                     <h1 id="title">VizTech</h1>
+                    <select name="ColorSelector" id="selectColor" onchange="updateColors()" style="text-align: center">
+                        <option value="regList" selected="true">True colors</option>
+                        <option value="proList">Protanopia (red-blind)</option>
+                        <option value="deuList">Deuteranopia (green-blind)</option>
+                        <option value="triList">Tritanopia (blue-blind)</option>
+                    </select>
                 </div>
                 <div class="col-4 graphSelector right">
                     <h3 class="infoTitle">Selector right viz</h3>
@@ -45,12 +51,14 @@
                     </div>
                 </div>
             </div>
+            <div class="row" style= "height:10">
+            </div>
             <div class="row">
-                <div class="col-6" style="height: 300px">
+                <div class="col-6" style="height: 750px">
                     <h3 class="visTitle">viz 1</h3>
                     <canvas id="chartLeft" width="200" height="200"></canvas>
                 </div>
-                <div class="col-6" style="height: 300px">
+                <div class="col-6" style="height: 750px">
                     <h3 class="visTitle">viz 2</h3>
                     <canvas id="chartRight" width="200" height="200"></canvas>
                 </div>
