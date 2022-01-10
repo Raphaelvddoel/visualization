@@ -63,21 +63,22 @@
                 for JBI100 Visualization 21-22
             </p>
         </div>
-        <div style="height: 300px">
+        <!--
+            <div style="height: 300px">
             <h3>Accidents per road type</h3>
             <canvas id="pieChart" width="200" height="200"></canvas>
         </div>
-        <div style="height: 300px">
+        -->
+        <div>
             <h3>Accidents per road type for each weather type</h3>
             <h5>slider</h5>
             <label for="sliderWeather">Slide for weather type</label>
             <input type="range" id="sliderWeather" name="sliderWeather" min="1" max="8">
             <br>
-            <button onclick="updateSecondPieChart()">Update chart</button><br>
+            <button onclick="updatePieChart2()">Update chart</button><br>
             <p>Element chosen: </p><p id="selectedWeather">5</p>
-            <canvas id="pieChart2" width="200" height="200"></canvas>
+            <!--<canvas id="pieChart2" width="200" height="200"></canvas>-->
         </div>
-        <div style="height: 200px;"></div>
         <div>
             <h3>Bar chart</h3>
             <h5>slider</h5>
@@ -107,7 +108,7 @@
                 <option value="98">Goods vehicle (unknown weight) occupant</option>
             </select>
             <br>
-            <button onclick="updateBarChart()">Update chart</button><br>
+            <button onclick="updateBarChart1()">Update chart</button><br>
             <p>Element chosen: </p><p id="selectedUser">5</p>
         </div>
         <div style="height: 400px; width: 500px">
@@ -119,6 +120,6 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.0/dist/chart.min.js"></script>
         <script src="https://d3js.org/d3.v4.min.js"></script>
-        <script src='main.js'></script>
+        <script src='main2.js'></script>
     </body>
 </html>
