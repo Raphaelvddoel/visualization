@@ -310,32 +310,40 @@ function showSelectorLeft(typeChosen) {
 
 function updatePieChart2() {
     result2 = [0,0,0,0,0,0];
-    typeChosen = document.getElementById("sliderWeather").value;
-    setDataAccidentRoadClassPerWeather(typeChosen);
     if (selectedChartLeft == 'pieChart2') {
+        typeChosen = document.getElementById("sliderWeatherLeft").value;
+        setDataAccidentRoadClassPerWeather(typeChosen);
         leftChart.data.datasets[0].data = result2;
         leftChart.update();
+        document.getElementById('selectedWeatherLeft').innerHTML = typeChosen;
     } else {
+        typeChosen = document.getElementById("sliderWeatherRight").value;
+        setDataAccidentRoadClassPerWeather(typeChosen);
         rightChart.data.datasets[0].data = result2;
         rightChart.update();
+        document.getElementById('selectedWeatherRight').innerHTML = typeChosen;
     }
     
-    document.getElementById('selectedWeather').innerHTML = typeChosen;
 }
 
 function updateBarChart1() {
     result3 = [0,0,0,0,0,0];
-    let select = document.getElementById("selectUser");
-    let typeChosen = select.options[select.selectedIndex].value;
-    setDataAccidentRoadClassPerUser(typeChosen);
     if (selectedChartLeft == 'barChart1') {
+        let select = document.getElementById("selectUserLeft");
+        let typeChosen = select.options[select.selectedIndex].value;
+        setDataAccidentRoadClassPerUser(typeChosen);
         leftChart.data.datasets[0].data = result3;
         leftChart.update();
+        document.getElementById('selectedUserLeft').innerHTML = typeChosen;
     } else {
+        let select = document.getElementById("selectUserRight");
+        let typeChosen = select.options[select.selectedIndex].value;
+        setDataAccidentRoadClassPerUser(typeChosen);
         rightChart.data.datasets[0].data = result3;
         rightChart.update();
+        document.getElementById('selectedUserRight').innerHTML = typeChosen;
     }
-    document.getElementById('selectedUser').innerHTML = typeChosen;
+    
 }
 
 function updateColors() {

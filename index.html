@@ -19,10 +19,41 @@
                     <button onclick="updateLeftGraph()">Update</button>
                     <br>
                     <div id="selectorpieChart2Left">
-                        INSERT SELECTOR piechart2
+                        <h5>slider</h5>
+                        <label for="sliderWeather">Slide for weather type</label>
+                        <input type="range" id="sliderWeatherLeft" name="sliderWeatherLeft" min="1" max="8">
+                        <br>
+                        <button onclick="updatePieChart2()">Update chart</button><br>
+                        <p>Element chosen: </p><p id="selectedWeatherLeft">5</p>
                     </div>
                     <div id="selectorBarChart1Left">
-                        INSERT SELECTOR barchart 1
+                        <label for="selectUser">Slide for road user type</label>
+                        <select name="userSelector" id="selectUserLeft">
+                            <option value="0">Pedestian</option>
+                            <option value="1">Cyclist</option>
+                            <option value="2">Motorcycle 50cc and under rider or passenger</option>
+                            <option value="3">Motorcycle 125cc and under rider or passenger</option>
+                            <option value="4">Motorcycle over 125cc and up to 500cc rider or  passenger</option>
+                            <option selected="selected" value="5">Motorcycle over 500cc rider or passenger</option>
+                            <option value="8">Taxi/Private hire car occupant</option>
+                            <option value="9">Car occupant</option>
+                            <option value="10">Minibus (8 - 16 passenger seats) occupant</option>
+                            <option value="11">Bus or coach occupant (17 or more pass seats)</option>
+                            <option value="16">Horse rider</option>
+                            <option value="17">Agricultural vehicle occupant</option>
+                            <option value="18">Tram occupant</option>
+                            <option value="19">Van / Goods vehicle (3.5 tonnes mgw or under) occupant</option>
+                            <option value="20">Goods vehicle (over 3.5t. and under 7.5t.) occupant</option>
+                            <option value="21">Goods vehicle (7.5 tonnes mgw and over) occupant</option>
+                            <option value="22">Mobility scooter rider</option>
+                            <option value="23">Electric motorcycle rider or passenger</option>
+                            <option value="90">Other vehicle occupant</option>
+                            <option value="97">Motorcycle - unknown cc rider or passenger</option>
+                            <option value="98">Goods vehicle (unknown weight) occupant</option>
+                        </select>
+                        <br>
+                        <button onclick="updateBarChart1()">Update chart</button><br>
+                        <p>Element chosen: </p><p id="selectedUserLeft">5</p>
                     </div>
                 </div>
                 <div class="col-4 appTitle">
@@ -44,10 +75,41 @@
                     <button onclick="updateRightGraph()">Update</button>
                     <br>
                     <div id="selectorpieChart2Right">
-                        INSERT SELECTOR piechart2
+                        <h5>slider</h5>
+                        <label for="sliderWeather">Slide for weather type</label>
+                        <input type="range" id="sliderWeather" name="sliderWeatherRight" min="1" max="8">
+                        <br>
+                        <button onclick="updatePieChart2()">Update chart</button><br>
+                        <p>Element chosen: </p><p id="selectedWeatherRight">5</p>
                     </div>
                     <div id="selectorBarChart1Right">
-                        INSERT SELECTOR barchart1
+                        <label for="selectUser">Slide for road user type</label>
+                        <select name="userSelector" id="selectUserRight">
+                            <option value="0">Pedestian</option>
+                            <option value="1">Cyclist</option>
+                            <option value="2">Motorcycle 50cc and under rider or passenger</option>
+                            <option value="3">Motorcycle 125cc and under rider or passenger</option>
+                            <option value="4">Motorcycle over 125cc and up to 500cc rider or  passenger</option>
+                            <option selected="selected" value="5">Motorcycle over 500cc rider or passenger</option>
+                            <option value="8">Taxi/Private hire car occupant</option>
+                            <option value="9">Car occupant</option>
+                            <option value="10">Minibus (8 - 16 passenger seats) occupant</option>
+                            <option value="11">Bus or coach occupant (17 or more pass seats)</option>
+                            <option value="16">Horse rider</option>
+                            <option value="17">Agricultural vehicle occupant</option>
+                            <option value="18">Tram occupant</option>
+                            <option value="19">Van / Goods vehicle (3.5 tonnes mgw or under) occupant</option>
+                            <option value="20">Goods vehicle (over 3.5t. and under 7.5t.) occupant</option>
+                            <option value="21">Goods vehicle (7.5 tonnes mgw and over) occupant</option>
+                            <option value="22">Mobility scooter rider</option>
+                            <option value="23">Electric motorcycle rider or passenger</option>
+                            <option value="90">Other vehicle occupant</option>
+                            <option value="97">Motorcycle - unknown cc rider or passenger</option>
+                            <option value="98">Goods vehicle (unknown weight) occupant</option>
+                        </select>
+                        <br>
+                        <button onclick="updateBarChart1()">Update chart</button><br>
+                        <p>Element chosen: </p><p id="selectedUserRight">5</p>
                     </div>
                 </div>
             </div>
@@ -79,45 +141,13 @@
         -->
         <div>
             <h3>Accidents per road type for each weather type</h3>
-            <h5>slider</h5>
-            <label for="sliderWeather">Slide for weather type</label>
-            <input type="range" id="sliderWeather" name="sliderWeather" min="1" max="8">
-            <br>
-            <button onclick="updatePieChart2()">Update chart</button><br>
-            <p>Element chosen: </p><p id="selectedWeather">5</p>
             <!--<canvas id="pieChart2" width="200" height="200"></canvas>-->
         </div>
         <div>
             <h3>Bar chart</h3>
             <h5>slider</h5>
 
-            <label for="selectUser">Slide for road user type</label>
-            <select name="userSelector" id="selectUser">
-                <option value="0">Pedestian</option>
-                <option value="1">Cyclist</option>
-                <option value="2">Motorcycle 50cc and under rider or passenger</option>
-                <option value="3">Motorcycle 125cc and under rider or passenger</option>
-                <option value="4">Motorcycle over 125cc and up to 500cc rider or  passenger</option>
-                <option selected="selected" value="5">Motorcycle over 500cc rider or passenger</option>
-                <option value="8">Taxi/Private hire car occupant</option>
-                <option value="9">Car occupant</option>
-                <option value="10">Minibus (8 - 16 passenger seats) occupant</option>
-                <option value="11">Bus or coach occupant (17 or more pass seats)</option>
-                <option value="16">Horse rider</option>
-                <option value="17">Agricultural vehicle occupant</option>
-                <option value="18">Tram occupant</option>
-                <option value="19">Van / Goods vehicle (3.5 tonnes mgw or under) occupant</option>
-                <option value="20">Goods vehicle (over 3.5t. and under 7.5t.) occupant</option>
-                <option value="21">Goods vehicle (7.5 tonnes mgw and over) occupant</option>
-                <option value="22">Mobility scooter rider</option>
-                <option value="23">Electric motorcycle rider or passenger</option>
-                <option value="90">Other vehicle occupant</option>
-                <option value="97">Motorcycle - unknown cc rider or passenger</option>
-                <option value="98">Goods vehicle (unknown weight) occupant</option>
-            </select>
-            <br>
-            <button onclick="updateBarChart1()">Update chart</button><br>
-            <p>Element chosen: </p><p id="selectedUser">5</p>
+            
         </div>
         <div style="height: 100px; width: 500px">
             <canvas id="barChart1" width="200" height="200"></canvas>
