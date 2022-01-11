@@ -3,6 +3,10 @@
     margin: 0;
 }
 
+body {
+    background-color: rgb(212,209,201);
+}
+
 h3.infoTitle {
     text-align: center;
 }
@@ -17,7 +21,7 @@ select {
     border: 2px solid rgb(17, 17, 17);
     border-radius: 0px 0px 15px 15px;;
     padding: 2px;
-    background-color: rgb(74, 233, 225);
+    background-color: rgb(124,164,165);
 }
 
 #footer {
@@ -25,23 +29,23 @@ select {
     left: 0;
     bottom: 0;
     width: 100%;
-    background-color: rgb(14, 56, 75);
-    color: rgb(151, 145, 145);
+    background-color: rgb(124,164,165);
+    color: rgb(0, 0, 0);
     text-align: center;
 }
 
 .col-4.graphSelector.left{
-    border: 2px solid rgb(17, 17, 17);
+    border: 2px solid rgb(0, 0, 0);
     border-radius: 0px 0px 15px 0px;
     padding: 5px;
-    background-color: rgb(185, 185, 185);
+    background-color: rgb(188,188,188);
 }
 
 .col-4.graphSelector.right{
     border: 2px solid rgb(17, 17, 17);
     border-radius: 0px 0px 0px 15px;
     padding: 5px;
-    background-color: rgb(185, 185, 185);
+    background-color: rgb(188,188,188);
 }
 
 .visTitle {
@@ -55,7 +59,7 @@ select {
     border: 2px solid rgb(17, 17, 17);
     border-radius: 15px 15px 15px 15px;
     padding: 5px;
-    background-color: rgb(136, 192, 218);
+    background-color: rgb(188,188,188);
 }
 
 .footer {
