@@ -21,9 +21,7 @@ var regList = ['rgba(102,144,252,255)', 'rgba(120,96,237,255)', 'rgba(218,36,127
 var proList = ['rgba(96,144,252,255)','rgba(19,115,234,255)','rgba(102,116,165,255)','rgba(165,146,36,255)','rgba(214,189,41,255)','rgba(235,220,172,255)'];
 var deuList = ['rgba(235,220,172,255)','rgba(18,122,204,255)','rgba(131,113,113,255)','rgba(186,138,25,255)','rgba(242,179,36,255)','rgba(254,213,186,255)'];
 var triList = ['rgba(55,161,173,255)','rgba(81,125,134,255)','rgba(213,60,68,255)','rgba(253,91,100,255)','rgba(254,165,177,255)','rgba(200,224,241,255)'];
-var colorList = [regList, proList, deuList,triList];
-var i = 3;
-var colorSet;
+var colorList = [regList, proList, deuList, triList];
 
 //labels for charts
 var labels1 = ["Motorway", "A(M)", "A", "B", "C", "Unclassified"]; // in dataset 1,2,3,4,5,6
@@ -78,9 +76,6 @@ function getIndex(item){
 init();
 
 async function init() {
-    //selected colorlist
-    colorSet = colorList[i]; 
-    //await updateColors();
     await getData();
     await calcData();
     updateChart('chartLeft', 'pieChart1');
@@ -174,7 +169,7 @@ pieChart1 = {
         datasets: [{
             data: result1,
             fill: true,
-            backgroundColor: colorSet,
+            backgroundColor: regList,
             borderColor: 'rgba(0, 0, 0, 0.4)',
             borderWidth: 1
         }]
@@ -202,7 +197,7 @@ pieChart2 = {
         datasets: [{
             data: result2,
             fill: true,
-            backgroundColor: colorSet,
+            backgroundColor: regList,
             borderColor: 'rgba(0, 0, 0, 0.4)',
             borderWidth: 1
         }]
@@ -230,7 +225,7 @@ barChart1 = {
         datasets: [
             {
             label: "Amount of accidents",
-            backgroundColor: colorSet,
+            backgroundColor: regList,
             data: result3,
             }
         ]
@@ -252,6 +247,7 @@ function updateLeftGraph() {
     selectedChartLeft = typeChosen;
     updateChart('chartLeft', typeChosen);
     showSelectorLeft(typeChosen);
+    updateColors();
 }
 
 function updateRightGraph() {
@@ -260,6 +256,7 @@ function updateRightGraph() {
     selectedChartRight = typeChosen;
     updateChart('chartRight', typeChosen);
     showSelectorRight(typeChosen);
+    updateColors();
 }
 
 function showSelectorRight(typeChosen) {
@@ -323,7 +320,7 @@ function updatePieChart2() {
         rightChart.update();
         document.getElementById('selectedWeatherRight').innerHTML = typeChosen;
     }
-    
+    updateColors();
 }
 
 function updateBarChart1() {
@@ -343,13 +340,15 @@ function updateBarChart1() {
         rightChart.update();
         document.getElementById('selectedUserRight').innerHTML = typeChosen;
     }
-    
+    updateColors();
 }
 
 function updateColors() {
     let selectColor  = document.getElementById('selectColor')
     let colorChosen = selectColor.selectedIndex;
     console.log(colorChosen);
-    i = colorChosen;
-    init();
+    leftChart.data.datasets[0].backgroundColor = colorList[colorChosen];
+    rightChart.data.datasets[0].backgroundColor = colorList[colorChosen];
+    leftChart.update();
+    rightChart.update();
 }
