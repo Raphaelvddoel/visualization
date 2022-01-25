@@ -10,21 +10,21 @@
         <div id="App" class="container-fluid">
             <div class="row">
                 <div class="col-4 graphSelector left">
-                    <h3 class="infoTitle">Selector left viz</h3>
+                    <h3 class="infoTitle">Left Visualization</h3>
                     <select name="selectLeftGraph" id="selectLeftGraph">
                         <option value="pieChart1" selected>graph 1</option>
                         <option value="pieChart2">graph 2</option>
-                        <option value="barChart1" disabled>graph 3</option>
+                        <option value="barChart1">graph 3</option>
                     </select>
-                    <button onclick="updateLeftGraph()">Update</button>
+                    <button onclick="updateLeftGraph()">Change chart</button>
                     <br>
                     <div id="selectorpieChart2Left">
                         <h5>slider</h5>
                         <label for="sliderWeather">Slide for weather type</label>
-                        <input type="range" id="sliderWeatherLeft" name="sliderWeatherLeft" min="1" max="8">
+                        <input type="range" id="sliderWeatherLeft" name="sliderWeatherLeft" min="1" max="8" onchange="updateSliderLabelLeft()"><p id="sliderSelectedWeatherTypeLeft">5</p>
                         <br>
-                        <button onclick="updatePieChart2()">Update chart</button><br>
-                        <p>Element chosen: </p><p id="selectedWeatherLeft">5</p>
+                        <button onclick="updatePieChart2(true)">Update chart</button><br>
+                        <p>weather condition displayed: </p><p id="selectedWeatherLeft">Snowing + high winds</p>
                     </div>
                     <div id="selectorBarChart1Left">
                         <label for="selectUser">Slide for road user type</label>
@@ -52,7 +52,7 @@
                             <option value="98">Goods vehicle (unknown weight) occupant</option>
                         </select>
                         <br>
-                        <button onclick="updateBarChart1()">Update chart</button><br>
+                        <button onclick="updateBarChart1(true)">Update chart</button><br>
                         <p>Element chosen: </p><p id="selectedUserLeft">5</p>
                     </div>
                 </div>
@@ -66,21 +66,21 @@
                     </select>
                 </div>
                 <div class="col-4 graphSelector right">
-                    <h3 class="infoTitle">Selector right viz</h3>
+                    <h3 class="infoTitle">Right visualization</h3>
                     <select name="selectRightGraph" id="selectRightGraph">
-                        <option value="pieChart1" disabled>graph 1</option>
+                        <option value="pieChart1">graph 1</option>
                         <option value="pieChart2">graph 2</option>
                         <option value="barChart1" selected>graph 3</option>
                     </select>
-                    <button onclick="updateRightGraph()">Update</button>
+                    <button onclick="updateRightGraph()">Change chart</button>
                     <br>
                     <div id="selectorpieChart2Right">
                         <h5>slider</h5>
                         <label for="sliderWeather">Slide for weather type</label>
-                        <input type="range" id="sliderWeather" name="sliderWeatherRight" min="1" max="8">
+                        <input type="range" id="sliderWeatherRight" name="sliderWeatherRight" min="1" max="8" onchange="updateSliderLabelRight()"><p id="sliderSelectedWeatherTypeRight">5</p>
                         <br>
-                        <button onclick="updatePieChart2()">Update chart</button><br>
-                        <p>Element chosen: </p><p id="selectedWeatherRight">5</p>
+                        <button onclick="updatePieChart2(false)">Update chart</button><br>
+                        <p>Weather condition chosen: </p><p id="selectedWeatherRight">Snowing + high winds</p>
                     </div>
                     <div id="selectorBarChart1Right">
                         <label for="selectUser">Slide for road user type</label>
@@ -108,8 +108,8 @@
                             <option value="98">Goods vehicle (unknown weight) occupant</option>
                         </select>
                         <br>
-                        <button onclick="updateBarChart1()">Update chart</button><br>
-                        <p>Element chosen: </p><p id="selectedUserRight">5</p>
+                        <button onclick="updateBarChart1(false)">Update chart</button><br>
+                        <p>User chosen: </p><p id="selectedUserRight">5</p>
                     </div>
                 </div>
             </div>

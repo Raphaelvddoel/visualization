@@ -1,0 +1,151 @@
+<html>
+    <head>
+        <title>Visualization</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="styleNew.css" type="text/css">
+    </head>
+    <body>
+        <div id="App" class="container-fluid">
+            <div class="row headerBar">
+                <div class="col-4">
+                    <!-- <h3 class="infoTitle">Left Visualization</h3> -->
+                    <select name="selectLeftGraph" id="selectLeftGraph">
+                        <option value="pieChart1" selected>Default</option>
+                        <option value="pieChart2">Weather condition</option>
+                        <option value="barChart1">User type</option>
+                    </select>
+                    <button type="button" class="btn btn-success" onclick="updateLeftGraph()">Change chart</button>
+                </div>
+                <div class="col-4">
+                    <h1 id="title">VizTech</h1>
+                </div>
+                <div class="col-4">
+                    <!-- <h3 class="infoTitle">Right visualization</h3> -->
+                    <select name="selectRightGraph" id="selectRightGraph">
+                        <option value="pieChart1">Default</option>
+                        <option value="pieChart2">Weather condition</option>
+                        <option value="barChart1" selected>User type</option>
+                    </select>
+                    <button type="button" class="btn btn-success" onclick="updateRightGraph()">Change chart</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5">
+                    <div id="selectorpieChart2Left">
+                        <label for="sliderWeather">Weather type:</label>
+                        <input type="range" id="sliderWeatherLeft" name="sliderWeatherLeft" min="1" max="8" onchange="updateSliderLabelLeft()">
+                        <p id="sliderSelectedWeatherTypeLeft">Snowing + high winds</p>
+                        <br>
+                        <button type="button" class="btn btn-success" onclick="updatePieChart2(true)">Update chart</button><br>
+                        <p>weather condition displayed: </p><p id="selectedWeatherLeft">Snowing + high winds</p>
+                    </div>
+                    <div id="selectorBarChart1Left">
+                        <label for="selectUser">Road user type:</label>
+                        <select name="userSelector" id="selectUserLeft">
+                            <option value="0">Pedestian</option>
+                            <option value="1">Cyclist</option>
+                            <option value="2">Motorcycle 50cc and under rider or passenger</option>
+                            <option value="3">Motorcycle 125cc and under rider or passenger</option>
+                            <option value="4">Motorcycle over 125cc and up to 500cc rider or  passenger</option>
+                            <option selected value="5">Motorcycle over 500cc rider or passenger</option>
+                            <option value="6">Taxi/Private hire car occupant</option>
+                            <option value="7">Car occupant</option>
+                            <option value="8">Minibus (8 - 16 passenger seats) occupant</option>
+                            <option value="9">Bus or coach occupant (17 or more pass seats)</option>
+                            <option value="10">Horse rider</option>
+                            <option value="11">Agricultural vehicle occupant</option>
+                            <option value="12">Tram occupant</option>
+                            <option value="13">Van / Goods vehicle (3.5 tonnes mgw or under) occupant</option>
+                            <option value="14">Goods vehicle (over 3.5t. and under 7.5t.) occupant</option>
+                            <option value="15">Goods vehicle (7.5 tonnes mgw and over) occupant</option>
+                            <option value="16">Mobility scooter rider</option>
+                            <option value="17">Electric motorcycle rider or passenger</option>
+                            <option value="18">Other vehicle occupant</option>
+                            <option value="19">Motorcycle - unknown cc rider or passenger</option>
+                            <option value="20">Goods vehicle (unknown weight) occupant</option>
+                        </select>
+                        <br>
+                        <button type="button" class="btn btn-success" onclick="updateBarChart1(true)">Update chart</button><br>
+                        <p>Element chosen: </p><p id="selectedUserLeft">Motorcycle over 500cc rider or passenger</p>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <select name="ColorSelector" id="selectColor" onchange="updateColors()" style="text-align: center">
+                        <option value="regList" selected="true">True colors</option>
+                        <option value="proList">Protanopia (red-blind)</option>
+                        <option value="deuList">Deuteranopia (green-blind)</option>
+                        <option value="triList">Tritanopia (blue-blind)</option>
+                    </select>
+                </div>
+                <div class="col-5">
+                    <div id="selectorpieChart2Right">
+                        <label for="sliderWeather">Slide for weather type</label>
+                        <input type="range" id="sliderWeatherRight" name="sliderWeatherRight" min="1" max="8" onchange="updateSliderLabelRight()">
+                        <p id="sliderSelectedWeatherTypeRight">Snowing + high winds</p>
+                        <br>
+                        <button type="button" class="btn btn-success" onclick="updatePieChart2(false)">Update chart</button><br>
+                        <p>Weather condition chosen: </p><p id="selectedWeatherRight">Snowing + high winds</p>
+                    </div>
+                    <div id="selectorBarChart1Right">
+                        <label for="selectUser">Road user type:</label>
+                        <select name="userSelector" id="selectUserRight">
+                            <option value="0">Pedestian</option>
+                            <option value="1">Cyclist</option>
+                            <option value="2">Motorcycle 50cc and under rider or passenger</option>
+                            <option value="3">Motorcycle 125cc and under rider or passenger</option>
+                            <option value="4">Motorcycle over 125cc and up to 500cc rider or  passenger</option>
+                            <option selected value="5">Motorcycle over 500cc rider or passenger</option>
+                            <option value="6">Taxi/Private hire car occupant</option>
+                            <option value="7">Car occupant</option>
+                            <option value="8">Minibus (8 - 16 passenger seats) occupant</option>
+                            <option value="9">Bus or coach occupant (17 or more pass seats)</option>
+                            <option value="10">Horse rider</option>
+                            <option value="11">Agricultural vehicle occupant</option>
+                            <option value="12">Tram occupant</option>
+                            <option value="13">Van / Goods vehicle (3.5 tonnes mgw or under) occupant</option>
+                            <option value="14">Goods vehicle (over 3.5t. and under 7.5t.) occupant</option>
+                            <option value="15">Goods vehicle (7.5 tonnes mgw and over) occupant</option>
+                            <option value="16">Mobility scooter rider</option>
+                            <option value="17">Electric motorcycle rider or passenger</option>
+                            <option value="18">Other vehicle occupant</option>
+                            <option value="19">Motorcycle - unknown cc rider or passenger</option>
+                            <option value="20">Goods vehicle (unknown weight) occupant</option>
+                        </select>
+                        <br>
+                        <button type="button" class="btn btn-success" onclick="updateBarChart1(false)">Update chart</button><br>
+                        <p>User chosen: </p><p id="selectedUserRight">Motorcycle over 500cc rider or passenger</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6" style="height: 550px">
+                    <h3 id="visTitleLeft" class="visTitle">Accidents per road type</h3>
+                    <canvas id="chartLeft" width="600px" height="550px"></canvas>
+                </div>
+                <div class="col-6" style="height: 550px">
+                    <h3 id="visTitleRight" class="visTitle">Accidents per road type per user type</h3>
+                    <canvas id="chartRight" width="600px" height="550px"></canvas>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div class="footer-text">
+                <p>
+                    Made by Chris D'Mello, Raphael van den Doel, Jayin Nejal & Rutishkrishna Srinivasaraghavan
+                    <br>
+                    for JBI100 Visualization 21-22
+                </p>
+            </div>
+            
+        </div>
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.0/dist/chart.min.js"></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src='main.js'></script>
+    </body>
+</html>

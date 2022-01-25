@@ -16,6 +16,9 @@ var rightChart;
 var selectedChartLeft = 'pieChart1';
 var selectedChartRight = 'barChart1';
 
+//selectorlists 
+var weatherList = ['Fine no high winds', 'Raining no high winds', 'Snowing no high winds', 'Fine + high winds', 'Raining + high winds', 'Snowing + high winds', 'Fog or mist', 'Other', 'Unknown'];
+var labelIdList = [0,1,2,3,4,5,8,9,10,11,16,17,18,19,20,21,22,23,90,97,98];
 //Colorlists
 var regList = ['rgba(102,144,252,1)', 'rgba(120,96,237,1)', 'rgba(218,36,127,1)', 'rgba(252,95,27,1)', 'rgba(253,175,37,1)', 'rgba(189,234,179,1)'];
 var proList = ['rgba(96,144,252,1)','rgba(19,115,234,1)','rgba(102,116,165,1)','rgba(165,146,36,1)','rgba(214,189,41,1)','rgba(235,220,172,1)'];
@@ -45,16 +48,7 @@ var labels2 = ['Pedestrian',
 'Electric motorcycle rider or passenger',
 'Other vehicle occupant',
 'Motorcycle - unknown cc rider or passenger',
-'Goods vehicle (unknown weight) occupant',
-'Unknown vehicle type (self rep only)',
-'Motorcycle - Scooter (1979-1998)',
-'Motorcycle (1979-1998)',
-'Motorcycle - Combination (1979-1998)',
-'Motorcycle over 125cc (1999-2004)',
-'Taxi (excluding private hire cars) (1979-2004)',
-'Car (including private hire cars) (1979-2004)',
-'Minibus/Motor caravan (1979-1998)',
-'Goods over 3.5 tonnes (1979-1998)'];
+'Goods vehicle (unknown weight) occupant'];
 
 function getIndex(item){
     const items = ["Accident_Index","Location_Easting_OSGR","Location_Northing_OSGR","Longitude","Latitude",
@@ -214,7 +208,7 @@ pieChart2 = {
             line: {
                 tension: 0.4
             }
-        }
+        },
     }
 }
 
@@ -232,12 +226,6 @@ barChart1 = {
     },
     options: {
         maintainAspectRatio: false,
-        plugins: {
-            title: {
-                display: true,
-                text: 'bar chart'
-            },
-        }
     }
 }
 
@@ -259,96 +247,115 @@ function updateRightGraph() {
     updateColors();
 }
 
-function showSelectorRight(typeChosen) {
-    if (typeChosen == 'pieChart1') {
-        var1 = document.getElementById("selectorpieChart2Right").style.display = 'none';
-        var2 = document.getElementById("selectorBarChart1Right").style.display = 'none';
-    } else if (typeChosen == 'pieChart2') {
-        var1 = document.getElementById("selectorpieChart2Right").style.display = 'inline';
-        var2 = document.getElementById("selectorBarChart1Right").style.display = 'none';
-    } else if (typeChosen == 'barChart1') {
-        var1 = document.getElementById("selectorpieChart2Right").style.display = 'none';
-        var2 = document.getElementById("selectorBarChart1Right").style.display = 'inline';
-    } else {
-        alert('selected type is not an option');
-    }
-    var options = document.getElementById("selectLeftGraph").getElementsByTagName("option");
-    for (var i = 0; i < options.length; i++) {
-         if (options[i].value == typeChosen) {
-            options[i].disabled = true;
-         } else {
-            options[i].disabled = false;
-         }
-    }
-}
-
 function showSelectorLeft(typeChosen) {
     if (typeChosen == 'pieChart1') {
         var1 = document.getElementById("selectorpieChart2Left").style.display = 'none';
         var2 = document.getElementById("selectorBarChart1Left").style.display = 'none';
+        document.getElementById('visTitleLeft').innerHTML= "Accidents per road type";
     } else if (typeChosen == 'pieChart2') {
         var1 = document.getElementById("selectorpieChart2Left").style.display = 'inline';
         var2 = document.getElementById("selectorBarChart1Left").style.display = 'none';
+        document.getElementById('visTitleLeft').innerHTML= "Accidents per road type during weather condition";
     } else if (typeChosen == 'barChart1') {
         var1 = document.getElementById("selectorpieChart2Left").style.display = 'none';
         var2 = document.getElementById("selectorBarChart1Left").style.display = 'inline';
+        document.getElementById('visTitleLeft').innerHTML= "Accidents per road type per user type";
     } else {
         alert('selected type is not an option');
     }
-    var options = document.getElementById("selectRightGraph").getElementsByTagName("option");
-    for (var i = 0; i < options.length; i++) {
-         if (options[i].value == typeChosen) {
-            options[i].disabled = true;
-         } else {
-            options[i].disabled = false;
-         }
+}
+
+function showSelectorRight(typeChosen) {
+    if (typeChosen == 'pieChart1') {
+        var1 = document.getElementById("selectorpieChart2Right").style.display = 'none';
+        var2 = document.getElementById("selectorBarChart1Right").style.display = 'none';
+        document.getElementById('visTitleRight').innerHTML= "Accidents per road type";
+    } else if (typeChosen == 'pieChart2') {
+        var1 = document.getElementById("selectorpieChart2Right").style.display = 'inline';
+        var2 = document.getElementById("selectorBarChart1Right").style.display = 'none';
+        document.getElementById('visTitleRight').innerHTML= "Accidents per road type during weather condition";
+    } else if (typeChosen == 'barChart1') {
+        var1 = document.getElementById("selectorpieChart2Right").style.display = 'none';
+        var2 = document.getElementById("selectorBarChart1Right").style.display = 'inline';
+        document.getElementById('visTitleRight').innerHTML= "Accidents per road type per user type";
+    } else {
+        alert('selected type is not an option');
     }
 }
 
-function updatePieChart2() {
+function updatePieChart2(left) {
     result2 = [0,0,0,0,0,0];
-    if (selectedChartLeft == 'pieChart2') {
-        typeChosen = document.getElementById("sliderWeatherLeft").value;
-        setDataAccidentRoadClassPerWeather(typeChosen);
-        leftChart.data.datasets[0].data = result2;
-        leftChart.update();
-        document.getElementById('selectedWeatherLeft').innerHTML = typeChosen;
+    if (left) {
+        if (selectedChartLeft == 'pieChart2') {
+            typeChosen = document.getElementById("sliderWeatherLeft").value;
+            setDataAccidentRoadClassPerWeather(typeChosen);
+            leftChart.data.datasets[0].data = result2;
+            leftChart.update();
+            document.getElementById('selectedWeatherLeft').innerHTML = weatherList[typeChosen];
+        } 
     } else {
-        typeChosen = document.getElementById("sliderWeatherRight").value;
-        setDataAccidentRoadClassPerWeather(typeChosen);
-        rightChart.data.datasets[0].data = result2;
-        rightChart.update();
-        document.getElementById('selectedWeatherRight').innerHTML = typeChosen;
+        if (selectedChartRight == 'pieChart2') {
+            typeChosen = document.getElementById("sliderWeatherRight").value;
+            setDataAccidentRoadClassPerWeather(typeChosen);
+            rightChart.data.datasets[0].data = result2;
+            rightChart.update();
+            document.getElementById('selectedWeatherRight').innerHTML = weatherList[typeChosen];
+        }
     }
     updateColors();
 }
 
-function updateBarChart1() {
+function updateBarChart1(left) {
     result3 = [0,0,0,0,0,0];
-    if (selectedChartLeft == 'barChart1') {
-        let select = document.getElementById("selectUserLeft");
-        let typeChosen = select.options[select.selectedIndex].value;
-        setDataAccidentRoadClassPerUser(typeChosen);
-        leftChart.data.datasets[0].data = result3;
-        leftChart.update();
-        document.getElementById('selectedUserLeft').innerHTML = typeChosen;
+    if (left) {
+        if (selectedChartLeft == 'barChart1') {
+            let select = document.getElementById("selectUserLeft");
+            let typeChosen = select.options[select.selectedIndex].value;
+            setDataAccidentRoadClassPerUser(labelIdList[typeChosen]);
+            console.log(labelIdList[typeChosen]);
+            leftChart.data.datasets[0].data = result3;
+            leftChart.update();
+            document.getElementById('selectedUserLeft').innerHTML = labels2[typeChosen];
+        }
     } else {
-        let select = document.getElementById("selectUserRight");
-        let typeChosen = select.options[select.selectedIndex].value;
-        setDataAccidentRoadClassPerUser(typeChosen);
-        rightChart.data.datasets[0].data = result3;
-        rightChart.update();
-        document.getElementById('selectedUserRight').innerHTML = typeChosen;
+        if (selectedChartRight == 'barChart1') {
+            let select = document.getElementById("selectUserRight");
+            let typeChosen = select.options[select.selectedIndex].value;
+            setDataAccidentRoadClassPerUser(labelIdList[typeChosen]);
+            rightChart.data.datasets[0].data = result3;
+            rightChart.update();
+            document.getElementById('selectedUserRight').innerHTML = labels2[typeChosen];
+        }
     }
     updateColors();
 }
 
 function updateColors() {
-    let selectColor  = document.getElementById('selectColor')
+    let selectColor  = document.getElementById('selectColor');
     let colorChosen = selectColor.selectedIndex;
-    console.log(colorChosen);
     leftChart.data.datasets[0].backgroundColor = colorList[colorChosen];
     rightChart.data.datasets[0].backgroundColor = colorList[colorChosen];
     leftChart.update();
     rightChart.update();
+}
+
+function updateSliderLabelLeft() {
+    typeChosen = document.getElementById("sliderWeatherLeft").value;
+    document.getElementById('sliderSelectedWeatherTypeLeft').innerHTML = weatherList[typeChosen];
+} 
+function updateSliderLabelRight() {
+    typeChosen = document.getElementById("sliderWeatherRight").value;
+    document.getElementById('sliderSelectedWeatherTypeRight').innerHTML = weatherList[typeChosen];
+}
+
+function clickHandler(evt) {
+    const points = leftChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+
+    if (points.length) {
+        const firstPoint = points[0];
+        const label = leftChart.data.labels[firstPoint.index];
+        const value = leftChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+        console.log(label);
+        console.log(value);
+    }
 }
