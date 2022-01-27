@@ -19,23 +19,10 @@ canvas {
 }
 .visTitle {
     background-color: #008cba;
-    padding: 10px;
+    padding: 5px;
     margin-bottom: 0;
     border-radius: 5px 5px 0 0;
     color: white;
-}
-
-.headerBar select {
-    margin-top: 5px;
-    padding: 8px;
-    font-size: 1em;
-}
-#selectorpieChart2Left {
-    text-align: center;
-}
-
-#sliderSelectedWeatherTypeRight, #sliderSelectedWeatherTypeLeft {
-    display: inline;
 }
 
 #footer {

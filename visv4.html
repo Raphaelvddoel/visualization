@@ -9,54 +9,55 @@
     <body>
         <div id="App" class="container-fluid">
             <div class="row">
-                <div class="col-5">
+                <div class="col-4">
+                    <h3 class="visTitle">Default chart</h3>
+                    <div id="leftTopChart" style="height: 400px;">
+                        <canvas id="chartLeftTop" width="600px" height="400px"></canvas>
+                    </div>
+                    <button type="button" class="btn btn-success" onclick="resetCharts()">All road classes</button>
+                    <h3 class="visTitle">user type</h3>
+                    <div id="leftBottomChart" style="height: 400px;">
+                        <canvas id="chartLeftBottom" width="600px" height="400px"></canvas>
+                    </div>
+                    <input type="radio" name="rightSelector" value="pie" id="rightPie" >
+                    <label for="rightPie">Pie</label>
+                    <input type="radio" name="rightSelector" value="bar" id="rightBar" checked>
+                    <label for="rightBar">Bar</label>
+                    <br>
+                    <button type="button" class="btn btn-success" onclick="updateLeftBottomChartType()">update chart</button>
                 </div>
-                <div class="col-2">
+                <div class="col-4">
                     <select name="ColorSelector" id="selectColor" onchange="updateColors()" style="text-align: center">
                         <option value="regList" selected="true">True colors</option>
                         <option value="proList">Protanopia (red-blind)</option>
                         <option value="deuList">Deuteranopia (green-blind)</option>
                         <option value="triList">Tritanopia (blue-blind)</option>
                     </select>
+                    <h3 class="visTitle">user type</h3>
+                    <div id="leftBottomChart" style="height: 400px;">
+                        <canvas id="chartLeftBottom" width="600px" height="400px"></canvas>
+                    </div>
+                    <h3 class="visTitle">user type</h3>
+                    <div id="leftBottomChart" style="height: 400px;">
+                        <canvas id="chartLeftBottom" width="600px" height="400px"></canvas>
+                    </div>
                 </div>
-                <div class="col-5">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4" style="height: 550px">
-                    <h3 id="visTitleLeft" class="visTitle">Default chart</h3>
-                    <canvas id="chartLeft" width="600px" height="550px"></canvas>
-                </div>
-                <div class="col-4" style="height: 550px">
-                    <h3 id="visTitleCenter" class="visTitle">Weather condition</h3>
-                    <canvas id="chartCenter" width="600px" height="550px"></canvas>
-                </div>
-                <div class="col-4" style="height: 550px">
-                    <h3 id="visTitleRight" class="visTitle">user type</h3>
-                    <canvas id="chartRight" width="600px" height="550px"></canvas>
-                </div>
-            </div>
-            <div class="row" id="selectors">
                 <div class="col-4">
-                    No selector
-                </div>
-                <div class="col-4" style="margin-top: 80px;">
+                    <h3 class="visTitle">Weather condition</h3>
+                    <div id="rightTopChart" style="height: 400px;">
+                        <canvas id="chartRightTop" width="600px" height="400px"></canvas>
+                    </div>
                     <input type="radio" name="centerSelector" value="pie" id="centerPie" checked>
                     <label for="centerPie">Pie</label>
                     <input type="radio" name="centerSelector" value="bar" id="centerBar">
                     <label for="centerBar">Bar</label>
-                    <br>
-                    <button type="button" class="btn btn-success" onclick="updateCenterChartType()">update chart</button>
+                    <button type="button" class="btn btn-success" onclick="updateRightTopChartType()">update chart</button>
+                    <h3 class="visTitle">Road condition</h3>
+                    <div id="rightBottomChart" style="height: 400px;">
+                        <canvas id="chartRightBottom" width="600px" height="400px"></canvas>
+                    </div>
                 </div>
-                <div class="col-4">
-                    <input type="radio" name="rightSelector" value="pie" id="rightPie" >
-                    <label for="rightPie">Pie</label>
-                    <input type="radio" name="rightSelector" value="bar" id="rightBar" checked>
-                    <label for="rightBar">Bar</label>
-                    <br>
-                    <button type="button" class="btn btn-success" onclick="updateRightChartType()">update chart</button>
-                </div>
-            </div>   
+            </div> 
         </div>
         <!--
             <div id="footer">
