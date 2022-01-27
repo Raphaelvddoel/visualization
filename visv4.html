@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <title>Visualization</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="stylev4.css" type="text/css">
+    </head>
+    <body>
+        <div id="App" class="container-fluid">
+            <div class="row">
+                <div class="col-5">
+                </div>
+                <div class="col-2">
+                    <select name="ColorSelector" id="selectColor" onchange="updateColors()" style="text-align: center">
+                        <option value="regList" selected="true">True colors</option>
+                        <option value="proList">Protanopia (red-blind)</option>
+                        <option value="deuList">Deuteranopia (green-blind)</option>
+                        <option value="triList">Tritanopia (blue-blind)</option>
+                    </select>
+                </div>
+                <div class="col-5">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4" style="height: 550px">
+                    <h3 id="visTitleLeft" class="visTitle">Default chart</h3>
+                    <canvas id="chartLeft" width="600px" height="550px"></canvas>
+                </div>
+                <div class="col-4" style="height: 550px">
+                    <h3 id="visTitleCenter" class="visTitle">Weather condition</h3>
+                    <canvas id="chartCenter" width="600px" height="550px"></canvas>
+                </div>
+                <div class="col-4" style="height: 550px">
+                    <h3 id="visTitleRight" class="visTitle">user type</h3>
+                    <canvas id="chartRight" width="600px" height="550px"></canvas>
+                </div>
+            </div>
+            <div class="row" id="selectors">
+                <div class="col-4">
+                    No selector
+                </div>
+                <div class="col-4" style="margin-top: 80px;">
+                    <input type="radio" name="centerSelector" value="pie" id="centerPie" checked>
+                    <label for="centerPie">Pie</label>
+                    <input type="radio" name="centerSelector" value="bar" id="centerBar">
+                    <label for="centerBar">Bar</label>
+                    <br>
+                    <button type="button" class="btn btn-success" onclick="updateCenterChartType()">update chart</button>
+                </div>
+                <div class="col-4">
+                    <input type="radio" name="rightSelector" value="pie" id="rightPie" >
+                    <label for="rightPie">Pie</label>
+                    <input type="radio" name="rightSelector" value="bar" id="rightBar" checked>
+                    <label for="rightBar">Bar</label>
+                    <br>
+                    <button type="button" class="btn btn-success" onclick="updateRightChartType()">update chart</button>
+                </div>
+            </div>   
+        </div>
+        <!--
+            <div id="footer">
+            <div class="footer-text">
+                <p>
+                    Made by Chris D'Mello, Raphael van den Doel, Jayin Nejal & Rutishkrishna Srinivasaraghavan
+                    <br>
+                    for JBI100 Visualization 21-22
+                </p>
+            </div> 
+        </div>
+        -->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.0/dist/chart.min.js"></script>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src='mainv4.js'></script>
+    </body>
+</html>

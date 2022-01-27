@@ -7,6 +7,59 @@
         <link rel="stylesheet" href="style.css" type="text/css">
     </head>
     <body>
+        <div id="app" class="container-fluid">
+            <div class="row">
+                <div class="col-4">
+                    <div id="canvas1Left" style="height: 400px">
+                        <canvas id="chartLeftTop" width="200" height="200"></canvas>
+                    </div>
+                    <div id="canvas2Left" style="height: 400px">
+                        <input type="radio" id="weather_pie" name="weatherSwitch" value="pie" checked>
+                        <label for="weather_pie">Pie</label>
+                        <input type="radio" id="weather_bar" name="weatherSwitch" value ="bar">
+                        <label for="weather_bar">Bar</label>
+                        <button type="button" class="btn btn-success" onclick="updateWeatherChartType()">Change type</button>
+                        <canvas id="chartLeftBottom" width="200" height="200"></canvas>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div id="canvas1Center" style="height: 400px">
+                        <canvas id="chartCenterTop" width="200" height="200"></canvas>
+                    </div>
+                    <div id="canvas2Center" style="height: 400px">
+                        <canvas id="chartCenterBottom" width="200" height="200"></canvas>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div id="canvas1Right" style="height: 400px">
+                        <input type="radio" id="user_pie" name="userSwitch" checked>
+                        <label for="user_pie">Pie</label>
+                        <input type="radio" id="user_bar" name="userSwitch">
+                        <label for="user_bar">Bar</label>
+                        <button type="button" class="btn btn-success" onclick="updateUserChartType()">Change type</button>
+                        <canvas id="chartRightTop" width="200" height="200"></canvas>
+                    </div>
+                    <div id="canvas2Right" style="height: 400px">
+                        <input type="radio" id="condition_pie" name="conditionSwitch" checked>
+                        <label for="condition_pie">Pie</label>
+                        <input type="radio" id="condition_bar" name="conditionSwitch">
+                        <label for="condition_bar">Bar</label>
+                        <button type="button" class="btn btn-success" onclick="updateConditionChartType()">Change type</button>
+                        <canvas id="chartRightBottom" width="200" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div class="footer-text">
+                <p>
+                    Made by Chris D'Mello, Raphael van den Doel, Jayin Nejal & Rutishkrishna Srinivasaraghavan
+                    <br>
+                    for JBI100 Visualization 21-22
+                </p>
+            </div> 
+        </div>
+        <!-- 
         <div id="App" class="container-fluid">
             <div class="row">
                 <div class="col-4 graphSelector left">
@@ -116,7 +169,7 @@
             <div class="row" style= "height:10">
             </div>
             <div class="row">
-                <div class="col-6" style="height: 750px">
+                <div class="col-6" >
                     <h3 class="visTitle">viz 1</h3>
                     <canvas id="chartLeft" width="200" height="200"></canvas>
                 </div>
@@ -136,12 +189,13 @@
         <div style="height: 100px; width: 500px">
             <canvas id="barChart1" width="200" height="200"></canvas>
         </div>
+        -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.0/dist/chart.min.js"></script>
         <script src="https://d3js.org/d3.v4.min.js"></script>
-        <script src='main.js'></script>
+        <script src='mainNew.js'></script>
     </body>
 </html>

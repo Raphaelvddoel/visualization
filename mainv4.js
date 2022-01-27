@@ -1,0 +1,351 @@
+//Main variables
+var table = [];
+var csvUrl = "https://raphaelvddoel.github.io/visualization/dataset.csv";
+
+//variables for charts
+var result1 = [0,0,0,0,0,0,0,0,0];
+var result2 = [0,0,0,0,0,0];
+var result3 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var pieChart;
+var pieChart2;
+var barChart1;
+var leftChart;
+var rightChart;
+var centerChart;
+
+//Variables for chart editor
+var selectedChartLeft = 'pieChart1';
+var selectedChartRight = 'barChart1';
+
+var labelsWeatherType = ['Fine no high winds', 'Raining no high winds', 'Snowing no high winds', 'Fine + high winds', 'Raining + high winds', 'Snowing + high winds', 'Fog or mist', 'Other', 'Unknown'];
+
+
+//selectorlists 
+var weatherList = ['Fine no high winds', 'Raining no high winds', 'Snowing no high winds', 'Fine + high winds', 'Raining + high winds', 'Snowing + high winds', 'Fog or mist', 'Other', 'Unknown'];
+var labelIdList = [0,1,2,3,4,5,8,9,10,11,16,17,18,19,20,21,22,23,90,97,98];
+//Colorlists
+var regList = ['rgba(102,144,252,1)', 'rgba(120,96,237,1)', 'rgba(218,36,127,1)', 'rgba(252,95,27,1)', 'rgba(253,175,37,1)', 'rgba(189,234,179,1)'];
+var proList = ['rgba(96,144,252,1)','rgba(19,115,234,1)','rgba(102,116,165,1)','rgba(165,146,36,1)','rgba(214,189,41,1)','rgba(235,220,172,1)'];
+var deuList = ['rgba(235,220,172,1)','rgba(18,122,204,1)','rgba(131,113,113,1)','rgba(186,138,25,1)','rgba(242,179,36,1)','rgba(254,213,186,1)'];
+var triList = ['rgba(55,161,173,1)','rgba(81,125,134,1)','rgba(213,60,68,1)','rgba(253,91,100,1)','rgba(254,165,177,1)','rgba(200,224,241,1)'];
+var colorList = [regList, proList, deuList, triList];
+
+//labels for charts
+var labels1 = ["Motorway", "A(M)", "A", "B", "C", "Unclassified"]; // in dataset 1,2,3,4,5,6
+var labels2 = ['Pedestrian', 
+'Cyclist',
+'Motorcycle 50cc and under rider or passenger',
+'Motorcycle 125cc and under rider or passenger',
+'Motorcycle over 125cc and up to 500cc rider or  passenger',
+'Motorcycle over 500cc rider or passenger',
+'Taxi/Private hire car occupant',
+'Car occupant',
+'Minibus (8 - 16 passenger seats) occupant',
+'Bus or coach occupant (17 or more pass seats)',
+'Horse rider',
+'Agricultural vehicle occupant',
+'Tram occupant',
+'Van / Goods vehicle (3.5 tonnes mgw or under) occupant',
+'Goods vehicle (over 3.5t. and under 7.5t.) occupant',
+'Goods vehicle (7.5 tonnes mgw and over) occupant',
+'Mobility scooter rider',
+'Electric motorcycle rider or passenger',
+'Other vehicle occupant',
+'Motorcycle - unknown cc rider or passenger',
+'Goods vehicle (unknown weight) occupant'];
+
+function getIndex(item){
+    const items = ["Accident_Index","Location_Easting_OSGR","Location_Northing_OSGR","Longitude","Latitude",
+    "Police_Force","Accident_Severity","Number_of_Vehicles","Number_of_Casualties","Date","Day_of_Week","Time",
+    "Local_Authority_(District)","Local_Authority_(Highway)","1st_Road_Class","1st_Road_Number","Road_Type","Speed_limit",
+    "Junction_Detail","Junction_Control","2nd_Road_Class","2nd_Road_Number","Pedestrian_Crossing-Human_Control",
+    "Pedestrian_Crossing-Physical_Facilities","Light_Conditions","Weather_Conditions","Road_Surface_Conditions","Special_Conditions_at_Site",
+    "Carriageway_Hazards","Urban_or_Rural_Area","Did_Police_Officer_Attend_Scene_of_Accident","LSOA_of_Accident_Location","Vehicle_Reference_df_res",
+    "Casualty_Reference","Casualty_Class","Sex_of_Casualty","Age_of_Casualty","Age_Band_of_Casualty","Casualty_Severity","Pedestrian_Location","Pedestrian_Movement",
+    "Car_Passenger","Bus_or_Coach_Passenger","Pedestrian_Road_Maintenance_Worker","Casualty_Type","Casualty_Home_Area_Type","Casualty_IMD_Decile","Vehicle_Reference_df",
+    "Vehicle_Type","Towing_and_Articulation","Vehicle_Manoeuvre","Vehicle_Location-Restricted_Lane","Junction_Location","Skidding_and_Overturning","Hit_Object_in_Carriageway",
+    "Vehicle_Leaving_Carriageway","Hit_Object_off_Carriageway","1st_Point_of_Impact","Was_Vehicle_Left_Hand_Drive?","Journey_Purpose_of_Driver","Sex_of_Driver","Age_of_Driver",
+    "Age_Band_of_Driver","Engine_Capacity_(CC)","Propulsion_Code","Age_of_Vehicle","Driver_Home_Area_Type"];
+
+    return items.indexOf(item);
+}
+
+//initial activation function call
+init();
+
+async function init() {
+    await getData();
+    await calcData();
+    updateChart('chartLeft');
+    updateChart('chartCenter');
+    updateChart('chartRight');
+}
+/* data functions */
+async function getData(){ 
+    const response = await fetch(csvUrl);
+    const data = await response.text();
+    const refinedData = data.trim();
+    table = refinedData.split('\n').slice(1);
+}
+
+function calcData() {
+    setDataAccidentRoadClass();
+    setDataAccidentRoadClassPerWeather();
+    setDataAccidentRoadClassPerUser();
+}
+
+//pie chart 1
+function setDataAccidentRoadClass() {
+    table.forEach( row => {
+        let columns = row.split(','); 
+        const road_class        = columns[14];
+        result1[parseInt(road_class) - 1]++;
+    });
+}
+
+//pie chart 2
+function setDataAccidentRoadClassPerWeather(roadclass) {
+    if (roadclass !== undefined) {
+        table.forEach( row => {
+            let columns = row.split(','); 
+            if (columns[14] == roadclass) {
+                const weather_type = columns[25];
+                result2[parseInt(weather_type) - 1]++;
+            }
+        });
+    } else {
+        table.forEach( row => {
+            let columns = row.split(','); 
+            const weather_type = columns[25];
+            result2[parseInt(weather_type) - 1]++;
+        });
+    }
+}
+
+//bar chart 1
+function setDataAccidentRoadClassPerUser(roadclass) {
+    /*table.forEach( row => {
+        let columns = row.split(','); 
+        const road_class = columns[14];
+        const casualty_type = columns[44]; //Change this to index to increase speed
+        if (casualty_type == selectedType) {
+            result3[parseInt(road_class) - 1]++;
+        }
+    }); */
+    if (roadclass !== undefined) {
+        table.forEach( row => {
+            let columns = row.split(','); 
+            if (columns[14] == roadclass) {
+                const casualty_type = columns[44];
+                result3[labelIdList.indexOf(parseInt(casualty_type))]++;
+            }
+        });
+    } else {
+        table.forEach( row => {
+            let columns = row.split(','); 
+            const casualty_type = columns[44];
+            result3[labelIdList.indexOf(parseInt(casualty_type))]++;
+        });
+    }
+}
+/* end of data function */
+
+function updateChart(canvas) {
+    var ctx = document.getElementById(canvas).getContext("2d");
+    var temp;
+    if (canvas == 'chartLeft') {
+        if (leftChart) {
+            leftChart.destroy();
+        }
+        temp = jQuery.extend(true, {}, pieChart1);
+        leftChart = new Chart(ctx, temp);
+    } else if (canvas == 'chartCenter') {
+        if (centerChart) {
+            centerChart.destroy();
+        }
+        temp = jQuery.extend(true, {}, pieChart2);
+        centerChart = new Chart(ctx, temp);
+    } else {
+        if (rightChart) {
+            rightChart.destroy();
+        }
+        temp = jQuery.extend(true, {}, barChart1);
+        rightChart = new Chart(ctx, temp);
+    }
+}
+
+function updateCenterChartType() {
+    var ctx = document.getElementById('chartCenter').getContext("2d");
+    if (centerChart) {
+        centerChart.destroy();
+    }
+    var type;
+    if (document.getElementById('centerPie').checked) {
+        type = 'pie';
+    } else {
+        type = 'bar';
+    }
+    temp = jQuery.extend(true, {}, pieChart2);
+    temp.type = type;
+    centerChart = new Chart(ctx, temp);
+}
+
+function updateRightChartType() {
+    var ctx = document.getElementById('chartRight').getContext("2d");
+    if (rightChart) {
+        rightChart.destroy();
+    }
+    var type;
+    if (document.getElementById('rightPie').checked) {
+        type = 'pie';
+    } else {
+        type = 'bar';
+    }
+    temp = jQuery.extend(true, {}, barChart1);
+    temp.type = type;
+    rightChart = new Chart(ctx, temp);
+}
+
+
+pieChart1 = {
+    type: 'pie',
+    data: {
+        labels: labels1,
+        datasets: [{
+            data: result1,
+            fill: true,
+            backgroundColor: regList,
+            borderColor: 'rgba(0, 0, 0, 0.4)',
+            borderWidth: 1
+        }]
+    },
+    options:{
+        maintainAspectRatio: false,
+        scales: {
+            y: {
+                display: false
+            }
+        },
+        elements: {
+            line: {
+                tension: 0.4
+            }
+        }
+
+    }
+}
+
+pieChart2 = {
+    type: 'pie',
+    data: {
+        labels: labelsWeatherType,
+        datasets: [{
+            data: result2,
+            fill: true,
+            backgroundColor: regList,
+            borderColor: 'rgba(0, 0, 0, 0.4)',
+            borderWidth: 1,
+            label: "Number of accidents",
+        }]
+    },
+    options:{
+        maintainAspectRatio: false,
+        legend: { display: false },
+        scales: {
+            y: {
+                display: false
+            }
+        },
+        elements: {
+            line: {
+                tension: 0.4
+            }
+        },
+    }
+}
+
+barChart1 = {
+    type: 'bar',
+    data: {
+        labels: labels2,
+        datasets: [
+            {
+            label: "Number of accidents",
+            backgroundColor: regList,
+            data: result3,
+            }
+        ]
+    },
+    options: {
+        maintainAspectRatio: false,
+    }
+}
+
+function updatePieChart2(left) {
+    result2 = [0,0,0,0,0,0,0,0,0];
+    if (left) {
+        //if (selectedChartLeft == 'pieChart2') {
+            typeChosen = document.getElementById("sliderWeatherLeft").value;
+            setDataAccidentRoadClassPerWeather(typeChosen);
+            centerChart.data.datasets[0].data = result2;
+            centerChart.update();
+            console.log("this is run");
+            document.getElementById('selectedWeatherLeft').innerHTML = weatherList[typeChosen];
+        //} 
+    } else {
+        if (selectedChartRight == 'pieChart2') {
+            typeChosen = document.getElementById("sliderWeatherRight").value;
+            setDataAccidentRoadClassPerWeather(typeChosen);
+            rightChart.data.datasets[0].data = result2;
+            rightChart.update();
+            document.getElementById('selectedWeatherRight').innerHTML = weatherList[typeChosen];
+        }
+    }
+    updateColors();
+}
+
+function updateBarChart1(left) {
+    result3 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    if (left) {
+        if (selectedChartLeft == 'barChart1') {
+            let select = document.getElementById("selectUserLeft");
+            let typeChosen = select.options[select.selectedIndex].value;
+            setDataAccidentRoadClassPerUser(labelIdList[typeChosen]);
+            console.log(labelIdList[typeChosen]);
+            leftChart.data.datasets[0].data = result3;
+            leftChart.update();
+            document.getElementById('selectedUserLeft').innerHTML = labels2[typeChosen];
+        }
+    } else {
+        if (selectedChartRight == 'barChart1') {
+            let select = document.getElementById("selectUserRight");
+            let typeChosen = select.options[select.selectedIndex].value;
+            setDataAccidentRoadClassPerUser(labelIdList[typeChosen]);
+            rightChart.data.datasets[0].data = result3;
+            rightChart.update();
+            document.getElementById('selectedUserRight').innerHTML = labels2[typeChosen];
+        }
+    }
+    updateColors();
+}
+
+function updateColors() {
+    let selectColor  = document.getElementById('selectColor');
+    let colorChosen = selectColor.selectedIndex;
+    leftChart.data.datasets[0].backgroundColor = colorList[colorChosen];
+    rightChart.data.datasets[0].backgroundColor = colorList[colorChosen];
+    leftChart.update();
+    rightChart.update();
+}
+
+function clickHandler(evt) {
+    const points = leftChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+
+    if (points.length) {
+        const firstPoint = points[0];
+        const label = leftChart.data.labels[firstPoint.index];
+        const value = leftChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+        console.log(label);
+        console.log(value);
+    }
+}
