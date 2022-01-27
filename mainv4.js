@@ -8,11 +8,20 @@ var dataWeatherChart = [0,0,0,0,0,0,0,0,0];
 var dataUserChart = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var dataConditionChart = [0,0,0,0,0,0,0,0,0,0];
 
+var dataAgeChart1 = [0,0,0,0,0,0,0,0,0,0,0];
+var dataAgeChart2 = [0,0,0,0,0,0,0,0,0,0,0];
+var dataAgeChart3 = [0,0,0,0,0,0,0,0,0,0,0];
+var dataAgeChart4 = [0,0,0,0,0,0,0,0,0,0,0];
+var dataAgeChart5 = [0,0,0,0,0,0,0,0,0,0,0];
+var dataAgeChart6 = [0,0,0,0,0,0,0,0,0,0,0];
+
+
 //config variable declaration
 var defaultChart;
 var weatherChart;
 var userChart;
 var conditionChart;
+var ageChart;
 
 //Chart objects
 var leftTopChart;
@@ -57,6 +66,19 @@ var labels2 = ['Pedestrian',
 'Motorcycle - unknown cc rider or passenger',
 'Goods vehicle (unknown weight) occupant'];
 
+var labelsAgeChart = ["0 - 5",
+"6 - 10",
+"11 - 15",
+"16 - 20",
+"21 - 25",
+"26 - 35",
+"36 - 45",
+"46 - 55",
+"56 - 65",
+"66 - 75",
+"Over 75",
+]
+
 function getIndex(item){
     const items = ["Accident_Index","Location_Easting_OSGR","Location_Northing_OSGR","Longitude","Latitude",
     "Police_Force","Accident_Severity","Number_of_Vehicles","Number_of_Casualties","Date","Day_of_Week","Time",
@@ -81,6 +103,7 @@ async function init() {
     await calcData();
     updateChart('chartLeftTop');
     updateChart('chartLeftBottom');
+    updateChart('chartCenterBottom');
     updateChart('chartRightTop');
     updateChart('chartRightBottom');
     
@@ -98,6 +121,7 @@ function calcData() {
     setDataWeatherChart();
     setDataUserChart();
     setDataConditionChart();
+    setDataAgeChart();
 }
 
 function setDataDefaultChart() {
@@ -171,6 +195,63 @@ function setDataConditionChart(roadclass) {
         });
     }
 }
+
+function setDataAgeChart(roadclass) {
+    if (roadclass !== undefined) {
+        table.forEach( row => {
+            let columns = row.split(','); 
+            if (columns[14] == roadclass) {
+                const casualty_type = columns[44];
+                dataUserChart[labelIdList.indexOf(parseInt(casualty_type))]++;
+            }
+        });
+    } else {
+        table.forEach( row => {
+            let columns = row.split(','); 
+            const age_band_of_casualty = columns[37];
+            if (age_band_of_casualty > 0 && age_band_of_casualty < 12) {
+                const road_class = parseInt(columns[14]);
+                if (road_class < 4) {
+                    if (road_class < 2) {
+                        if (road_class == 1) {
+                            dataAgeChart1[parseInt(age_band_of_casualty)-1]++;
+                        } else {
+                            dataAgeChart2[parseInt(age_band_of_casualty)-1]++;
+                        }
+                    } else {
+                        dataAgeChart3[parseInt(age_band_of_casualty)-1]++;
+                    }
+                } else {
+                    if (road_class < 6) {
+                        if (road_class < 5) {
+                            dataAgeChart4[parseInt(age_band_of_casualty)-1]++;
+                        } else {
+                            dataAgeChart5[parseInt(age_band_of_casualty)-1]++;
+                        }
+                    } else {
+                        dataAgeChart6[parseInt(age_band_of_casualty)-1]++;
+                    }
+                }
+            }
+            //dataUserChart[labelIdList.indexOf(parseInt(casualty_type))]++;
+        });
+    }
+}
+
+function testing() {
+    var y = 0;
+    var n = 0;
+    table.forEach( row => {
+        let columns = row.split(','); 
+        const temp = columns[62];
+        if (temp > 0 && temp < 12) {
+            y++;
+        } else {
+            n++;
+        }
+    });
+    console.log("nope: " + n);
+}
 /* end of data function */
 
 function updateChart(canvas) {
@@ -189,17 +270,17 @@ function updateChart(canvas) {
         temp = jQuery.extend(true, {}, userChart);
         leftBottomChart = new Chart(ctx, temp);
     } else if (canvas == 'chartCenterTop') {
-        if (rightTopChart) {
-            rightTopChart.destroy();
+        if (centerTopChart) {
+            centerTopChart.destroy();
         }
         temp = jQuery.extend(true, {}, weatherChart);
-        rightTopChart = new Chart(ctx, temp);
+        centerTopChart = new Chart(ctx, temp);
     } else if (canvas == 'chartCenterBottom') {
-        if (rightTopChart) {
-            rightTopChart.destroy();
+        if (centerBottomChart) {
+            centerBottomChart.destroy();
         }
-        temp = jQuery.extend(true, {}, weatherChart);
-        rightTopChart = new Chart(ctx, temp);
+        temp = jQuery.extend(true, {}, ageChart);
+        centerBottomChart = new Chart(ctx, temp);
     } else if (canvas == 'chartRightTop') {
         if (rightTopChart) {
             rightTopChart.destroy();
@@ -221,7 +302,7 @@ function updateLeftBottomChartType() {
         leftBottomChart.destroy();
     }
     var type;
-    if (document.getElementById('rightPie').checked) {
+    if (document.getElementById('leftBottomPie').checked) {
         type = 'pie';
     } else {
         type = 'bar';
@@ -237,7 +318,7 @@ function updateRightTopChartType() {
         rightTopChart.destroy();
     }
     var type;
-    if (document.getElementById('centerPie').checked) {
+    if (document.getElementById('rightTopPie').checked) {
         type = 'pie';
     } else {
         type = 'bar';
@@ -249,18 +330,18 @@ function updateRightTopChartType() {
 
 function updateRightBottomChartType() {
     var ctx = document.getElementById('chartRightBottom').getContext("2d");
-    if (rightTopChart) {
-        rightTopChart.destroy();
+    if (rightBottomChart) {
+        rightBottomChart.destroy();
     }
     var type;
-    if (document.getElementById('centerPie').checked) {
+    if (document.getElementById('rightBottomPie').checked) {
         type = 'pie';
     } else {
         type = 'bar';
     }
-    temp = jQuery.extend(true, {}, weatherChart);
+    temp = jQuery.extend(true, {}, conditionChart);
     temp.type = type;
-    rightTopChart = new Chart(ctx, temp);
+    rightBottomChart = new Chart(ctx, temp);
 }
 
 
@@ -368,16 +449,46 @@ conditionChart = {
     }
 }
 
-function updateWeatherChart(typeChosen) {
-    dataWeatherChart = [0,0,0,0,0,0,0,0,0];
-    if (typeChosen !== undefined) {
-        setDataWeatherChart(labels1.indexOf(typeChosen)+1);
-    } else {
-        setDataWeatherChart();
+ageChart = {
+    type: 'line',
+    data: {
+      labels: labelsAgeChart,
+      datasets: [{ 
+            data: dataAgeChart1,
+            label: "Motorway",
+            borderColor: "#3e95cd",
+            fill: false
+        }, { 
+            data: dataAgeChart2,
+            label: "A(M)",
+            borderColor: "#8e5ea2",
+            fill: false
+        }, { 
+            data: dataAgeChart3,
+            label: "A",
+            borderColor: "#3cba9f",
+            fill: false
+        }, { 
+            data: dataAgeChart4,
+            label: "B",
+            borderColor: "#e8c3b9",
+            fill: false
+        }, { 
+            data: dataAgeChart5,
+            label: "C",
+            borderColor: "#c45850",
+            fill: false
+        }, { 
+            data: dataAgeChart6,
+            label: "Unclassified",
+            borderColor: "rgba(213,60,68,1)",
+            fill: false
+        }
+      ]
+    },
+    options: {
+      maintainAspectRatio: false
     }
-    rightTopChart.data.datasets[0].data = dataWeatherChart;
-    rightTopChart.update();
-    updateColors();
 }
 
 function updateUserChart(typeChosen) {
@@ -392,9 +503,34 @@ function updateUserChart(typeChosen) {
     updateColors();
 }
 
+function updateWeatherChart(typeChosen) {
+    dataWeatherChart = [0,0,0,0,0,0,0,0,0];
+    if (typeChosen !== undefined) {
+        setDataWeatherChart(labels1.indexOf(typeChosen)+1);
+    } else {
+        setDataWeatherChart();
+    }
+    rightTopChart.data.datasets[0].data = dataWeatherChart;
+    rightTopChart.update();
+    updateColors();
+}
+
+function updateConditionChart(typeChosen) {
+    dataConditionChart = [0,0,0,0,0,0,0,0,0,0];
+    if (typeChosen !== undefined) {
+        setDataConditionChart(labels1.indexOf(typeChosen)+1);
+    } else {
+        setDataConditionChart();
+    }
+    rightBottomChart.data.datasets[0].data = dataConditionChart;
+    rightBottomChart.update();
+    updateColors();
+}
+
 function resetCharts() {
     updateWeatherChart();
     updateUserChart();
+    updateConditionChart();
 }
 
 function updateColors() {
@@ -415,5 +551,6 @@ function clickHandler(evt) {
         //const value = leftTopChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
         updateWeatherChart(label);
         updateUserChart(label);
+        updateConditionChart(label);
     }
 }
