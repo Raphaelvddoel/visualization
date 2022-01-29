@@ -1,7 +1,7 @@
 # VizTech
 VizTech visualizes the data set "Great Britain Road Safety Data" from 2018 with a focus on road classes. 
 ## Usage
-go to [raphaelvddoel.github.io/visualization](https:/raphaelvddoel.github.io/visualization) or download this repository and open index.html. An internet connection is required when running the code locally.
+go to [raphaelvddoel.github.io/visualization](https://raphaelvddoel.github.io/visualization) or download this repository and open index.html. An internet connection is required when running the code locally.
 
 After having loaded the visualization tool, multiple charts appear. A color selector can be used to change the colors in which the charts are encoded. This ensures that e.g. red-blind users can still use this tool.
 
