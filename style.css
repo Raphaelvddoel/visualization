@@ -2,75 +2,37 @@
     padding: 0;
     margin: 0;
 }
-
 body {
-    background-color: rgb(212,209,201);
-}
-
-h3.infoTitle {
+    background-color: #f3f3f3;
     text-align: center;
 }
 
-select { 
-    width: 200px; 
-    text-align: center; 
+.chartColumn, canvas {
+    background-color: #ffffff;
 }
 
-#title {
-    text-align: center;
-    border: 2px solid rgb(17, 17, 17);
-    border-radius: 0px 0px 15px 15px;;
-    padding: 2px;
-    background-color: rgb(124,164,165);
+#selectColor {
+    margin: 15px;
+}
+
+.btn {
+    margin-bottom: 8px;
+}
+.visTitle {
+    background-color: #008cba;
+    padding: 5px;
+    margin-bottom: 0;
+    color: white;
+}
+
+#centerBottomChart {
+    margin-top: 125px;
 }
 
 #footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    margin-top: 25px;
     width: 100%;
-    background-color: rgb(124,164,165);
-    color: rgb(0, 0, 0);
+    background-color: #D3D3D3;
+    padding: 10px;
     text-align: center;
 }
-
-.col-4.graphSelector.left{
-    border: 2px solid rgb(0, 0, 0);
-    border-radius: 0px 0px 15px 0px;
-    padding: 5px;
-    background-color: rgb(188,188,188);
-}
-
-.col-4.graphSelector.right{
-    border: 2px solid rgb(17, 17, 17);
-    border-radius: 0px 0px 0px 15px;
-    padding: 5px;
-    background-color: rgb(188,188,188);
-}
-
-.visTitle {
-    border: 2px solid rgb(17, 17, 17);
-    border-radius: 15px 15px 15px 15px;
-    padding: 5px;
-    background-color: rgb(78, 78, 78);
-}
-
-.col-6 {
-    border: 2px solid rgb(17, 17, 17);
-    border-radius: 15px 15px 15px 15px;
-    padding: 5px;
-    background-color: rgb(188,188,188);
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    text-align: center;
-    position: relative;
-    /*margin-top: -10px;  negative value of footer height */
-    /*height: 150px;*/
-    clear:both;
-    padding-top:20px;
-  } 
-

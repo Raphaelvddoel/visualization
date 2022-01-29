@@ -1,201 +1,87 @@
 <html>
     <head>
-        <title>Visualization</title>
+        <title>VizTech</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-        <link rel="stylesheet" href="style.css" type="text/css">
+        <link rel="stylesheet" href="stylev4.css" type="text/css">
     </head>
     <body>
-        <div id="app" class="container-fluid">
-            <div class="row">
-                <div class="col-4">
-                    <div id="canvas1Left" style="height: 400px">
-                        <canvas id="chartLeftTop" width="200" height="200"></canvas>
-                    </div>
-                    <div id="canvas2Left" style="height: 400px">
-                        <input type="radio" id="weather_pie" name="weatherSwitch" value="pie" checked>
-                        <label for="weather_pie">Pie</label>
-                        <input type="radio" id="weather_bar" name="weatherSwitch" value ="bar">
-                        <label for="weather_bar">Bar</label>
-                        <button type="button" class="btn btn-success" onclick="updateWeatherChartType()">Change type</button>
-                        <canvas id="chartLeftBottom" width="200" height="200"></canvas>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div id="canvas1Center" style="height: 400px">
-                        <canvas id="chartCenterTop" width="200" height="200"></canvas>
-                    </div>
-                    <div id="canvas2Center" style="height: 400px">
-                        <canvas id="chartCenterBottom" width="200" height="200"></canvas>
-                    </div>
-                </div>
-                <div class="col-4">
-                    <div id="canvas1Right" style="height: 400px">
-                        <input type="radio" id="user_pie" name="userSwitch" checked>
-                        <label for="user_pie">Pie</label>
-                        <input type="radio" id="user_bar" name="userSwitch">
-                        <label for="user_bar">Bar</label>
-                        <button type="button" class="btn btn-success" onclick="updateUserChartType()">Change type</button>
-                        <canvas id="chartRightTop" width="200" height="200"></canvas>
-                    </div>
-                    <div id="canvas2Right" style="height: 400px">
-                        <input type="radio" id="condition_pie" name="conditionSwitch" checked>
-                        <label for="condition_pie">Pie</label>
-                        <input type="radio" id="condition_bar" name="conditionSwitch">
-                        <label for="condition_bar">Bar</label>
-                        <button type="button" class="btn btn-success" onclick="updateConditionChartType()">Change type</button>
-                        <canvas id="chartRightBottom" width="200" height="200"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="footer">
-            <div class="footer-text">
-                <p>
-                    Made by Chris D'Mello, Raphael van den Doel, Jayin Nejal & Rutishkrishna Srinivasaraghavan
-                    <br>
-                    for JBI100 Visualization 21-22
-                </p>
-            </div> 
-        </div>
-        <!-- 
         <div id="App" class="container-fluid">
             <div class="row">
-                <div class="col-4 graphSelector left">
-                    <h3 class="infoTitle">Left Visualization</h3>
-                    <select name="selectLeftGraph" id="selectLeftGraph">
-                        <option value="pieChart1" selected>graph 1</option>
-                        <option value="pieChart2">graph 2</option>
-                        <option value="barChart1">graph 3</option>
-                    </select>
-                    <button onclick="updateLeftGraph()">Change chart</button>
-                    <br>
-                    <div id="selectorpieChart2Left">
-                        <h5>slider</h5>
-                        <label for="sliderWeather">Slide for weather type</label>
-                        <input type="range" id="sliderWeatherLeft" name="sliderWeatherLeft" min="1" max="8" onchange="updateSliderLabelLeft()"><p id="sliderSelectedWeatherTypeLeft">5</p>
-                        <br>
-                        <button onclick="updatePieChart2(true)">Update chart</button><br>
-                        <p>weather condition displayed: </p><p id="selectedWeatherLeft">Snowing + high winds</p>
-                    </div>
-                    <div id="selectorBarChart1Left">
-                        <label for="selectUser">Slide for road user type</label>
-                        <select name="userSelector" id="selectUserLeft">
-                            <option value="0">Pedestian</option>
-                            <option value="1">Cyclist</option>
-                            <option value="2">Motorcycle 50cc and under rider or passenger</option>
-                            <option value="3">Motorcycle 125cc and under rider or passenger</option>
-                            <option value="4">Motorcycle over 125cc and up to 500cc rider or  passenger</option>
-                            <option selected="selected" value="5">Motorcycle over 500cc rider or passenger</option>
-                            <option value="8">Taxi/Private hire car occupant</option>
-                            <option value="9">Car occupant</option>
-                            <option value="10">Minibus (8 - 16 passenger seats) occupant</option>
-                            <option value="11">Bus or coach occupant (17 or more pass seats)</option>
-                            <option value="16">Horse rider</option>
-                            <option value="17">Agricultural vehicle occupant</option>
-                            <option value="18">Tram occupant</option>
-                            <option value="19">Van / Goods vehicle (3.5 tonnes mgw or under) occupant</option>
-                            <option value="20">Goods vehicle (over 3.5t. and under 7.5t.) occupant</option>
-                            <option value="21">Goods vehicle (7.5 tonnes mgw and over) occupant</option>
-                            <option value="22">Mobility scooter rider</option>
-                            <option value="23">Electric motorcycle rider or passenger</option>
-                            <option value="90">Other vehicle occupant</option>
-                            <option value="97">Motorcycle - unknown cc rider or passenger</option>
-                            <option value="98">Goods vehicle (unknown weight) occupant</option>
-                        </select>
-                        <br>
-                        <button onclick="updateBarChart1(true)">Update chart</button><br>
-                        <p>Element chosen: </p><p id="selectedUserLeft">5</p>
+                <div class="col-3">
+                    <div class="chartColumn">
+                        <h3 class="visTitle">Default chart</h3>
+                        <div id="leftTopChart" style="height: 350px;">
+                            <canvas id="chartLeftTop" width="600px" height="400px"></canvas>
+                        </div>
+                        <button type="button" class="btn btn-success" onclick="resetCharts()">All road classes</button>
+                        <h3 class="visTitle">User type</h3>
+                        <p id="filtedUsers">Number of accidents filtered: 0</p>
+                        <div id="leftBottomChart" style="height: 350px;">
+                            <canvas id="chartLeftBottom" width="600px" height="400px"></canvas>
+                        </div>
+                        <input type="radio" name="leftBottomSelector" value="pie" id="leftBottomPie" >
+                        <label for="leftBottomPie">Pie</label>
+                        <input type="radio" name="leftBottomSelector" value="bar" id="leftBottomBar" checked>
+                        <label for="leftBottomBar">Bar</label>
+                        <button type="button" class="btn btn-success" onclick="updateLeftBottomChartType()">update chart</button>
                     </div>
                 </div>
-                <div class="col-4 appTitle">
-                    <h1 id="title">VizTech</h1>
+                <div class="col-6">
                     <select name="ColorSelector" id="selectColor" onchange="updateColors()" style="text-align: center">
                         <option value="regList" selected="true">True colors</option>
                         <option value="proList">Protanopia (red-blind)</option>
                         <option value="deuList">Deuteranopia (green-blind)</option>
                         <option value="triList">Tritanopia (blue-blind)</option>
                     </select>
-                </div>
-                <div class="col-4 graphSelector right">
-                    <h3 class="infoTitle">Right visualization</h3>
-                    <select name="selectRightGraph" id="selectRightGraph">
-                        <option value="pieChart1">graph 1</option>
-                        <option value="pieChart2">graph 2</option>
-                        <option value="barChart1" selected>graph 3</option>
-                    </select>
-                    <button onclick="updateRightGraph()">Change chart</button>
-                    <br>
-                    <div id="selectorpieChart2Right">
-                        <h5>slider</h5>
-                        <label for="sliderWeather">Slide for weather type</label>
-                        <input type="range" id="sliderWeatherRight" name="sliderWeatherRight" min="1" max="8" onchange="updateSliderLabelRight()"><p id="sliderSelectedWeatherTypeRight">5</p>
-                        <br>
-                        <button onclick="updatePieChart2(false)">Update chart</button><br>
-                        <p>Weather condition chosen: </p><p id="selectedWeatherRight">Snowing + high winds</p>
+                    <div id="centerTopChart" style="height: 300px;">
+                        <canvas id="chartCenterTop" width="600px" height="300px"></canvas>
                     </div>
-                    <div id="selectorBarChart1Right">
-                        <label for="selectUser">Slide for road user type</label>
-                        <select name="userSelector" id="selectUserRight">
-                            <option value="0">Pedestian</option>
-                            <option value="1">Cyclist</option>
-                            <option value="2">Motorcycle 50cc and under rider or passenger</option>
-                            <option value="3">Motorcycle 125cc and under rider or passenger</option>
-                            <option value="4">Motorcycle over 125cc and up to 500cc rider or  passenger</option>
-                            <option selected="selected" value="5">Motorcycle over 500cc rider or passenger</option>
-                            <option value="8">Taxi/Private hire car occupant</option>
-                            <option value="9">Car occupant</option>
-                            <option value="10">Minibus (8 - 16 passenger seats) occupant</option>
-                            <option value="11">Bus or coach occupant (17 or more pass seats)</option>
-                            <option value="16">Horse rider</option>
-                            <option value="17">Agricultural vehicle occupant</option>
-                            <option value="18">Tram occupant</option>
-                            <option value="19">Van / Goods vehicle (3.5 tonnes mgw or under) occupant</option>
-                            <option value="20">Goods vehicle (over 3.5t. and under 7.5t.) occupant</option>
-                            <option value="21">Goods vehicle (7.5 tonnes mgw and over) occupant</option>
-                            <option value="22">Mobility scooter rider</option>
-                            <option value="23">Electric motorcycle rider or passenger</option>
-                            <option value="90">Other vehicle occupant</option>
-                            <option value="97">Motorcycle - unknown cc rider or passenger</option>
-                            <option value="98">Goods vehicle (unknown weight) occupant</option>
-                        </select>
-                        <br>
-                        <button onclick="updateBarChart1(false)">Update chart</button><br>
-                        <p>User chosen: </p><p id="selectedUserRight">5</p>
+                    <div id="centerBottomChart" style="height: 300px;">
+                        <canvas id="chartCenterBottom" width="600px" height="300px"></canvas>
+                    </div>
+                    <div id="footer">
+                        <div class="footer-text">
+                            <p>
+                                Made by Chris D'Mello, Raphael van den Doel, Jayin Nejal & Rutishkrishna Srinivasaraghavan
+                                <br>
+                                for JBI100 Visualization 21-22
+                            </p>
+                        </div> 
                     </div>
                 </div>
-            </div>
-            <div class="row" style= "height:10">
-            </div>
-            <div class="row">
-                <div class="col-6" >
-                    <h3 class="visTitle">viz 1</h3>
-                    <canvas id="chartLeft" width="200" height="200"></canvas>
+                <div class="col-3">
+                    <div class="chartColumn">
+                        <h3 class="visTitle">Weather condition</h3>
+                        <div id="rightTopChart" style="height: 350px;">
+                            <canvas id="chartRightTop" width="600px" height="400px"></canvas>
+                        </div>
+                        <input type="radio" name="rightTopSelector" value="pie" id="rightTopPie" checked>
+                        <label for="rightTopPie">Pie</label>
+                        <input type="radio" name="rightTopSelector" value="bar" id="rightTopBar">
+                        <label for="rightTopBar">Bar</label>
+                        <button type="button" class="btn btn-success" onclick="updateRightTopChartType()">update chart</button>
+                        <h3 class="visTitle">Special road condition</h3>
+                        <p id="normalConditionInfo">Number of accidents with no special condition: 0</p>
+                        <div id="rightBottomChart" style="height: 350px;">
+                            <canvas id="chartRightBottom" width="600px" height="400px"></canvas>
+                        </div>
+                        <input type="radio" name="rightBottomSelector" value="pie" id="rightBottomPie" checked>
+                        <label for="rightBottomPie">Pie</label>
+                        <input type="radio" name="rightBottomSelector" value="bar" id="rightBottomBar">
+                        <label for="rightBottomBar">Bar</label>
+                        <button type="button" class="btn btn-success" onclick="updateRightBottomChartType()">update chart</button>
+                    </div>
                 </div>
-                <div class="col-6" style="height: 750px">
-                    <h3 class="visTitle">viz 2</h3>
-                    <canvas id="chartRight" width="200" height="200"></canvas>
-                </div>
-            </div>
+            </div> 
         </div>
-        <div class="footer" id="footer">
-            <p>
-                Made by Chris D'Mello, Raphael van den Doel, Jayin Nejal & Rutishkrishna Srinivasaraghavan
-                <br>
-                for JBI100 Visualization 21-22
-            </p>
-        </div>
-        <div style="height: 100px; width: 500px">
-            <canvas id="barChart1" width="200" height="200"></canvas>
-        </div>
-        -->
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
         <script src="https://www.gstatic.com/charts/loader.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.0/dist/chart.min.js"></script>
-        <script src="https://d3js.org/d3.v4.min.js"></script>
-        <script src='mainNew.js'></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+        <script src="https://d3js.org/d3.v6.min.js"></script>
+        <script src='mainv4.js'></script>
     </body>
 </html>
