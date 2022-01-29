@@ -721,10 +721,23 @@ function resetCharts() {
 function updateColors() {
     let selectColor  = document.getElementById('selectColor');
     let colorChosen = selectColor.selectedIndex;
-    leftTopChart.data.datasets[0].backgroundColor = colorList[colorChosen];
-    leftBottomChart.data.datasets[0].backgroundColor = colorList[colorChosen];
+    let newColors = colorList[colorChosen];
+    leftTopChart.data.datasets[0].backgroundColor = newColors;
+    leftBottomChart.data.datasets[0].backgroundColor = newColors;
+    rightTopChart.data.datasets[0].backgroundColor = newColors;
+    rightBottomChart.data.datasets[0].backgroundColor = newColors;
+    for (let i = 0; i != newColors.length; i++) {
+        centerTopChart.data.datasets[i].borderColor = newColors[i];
+        centerTopChart.data.datasets[i].backgroundColor = newColors[i];
+        centerBottomChart.data.datasets[i].borderColor = newColors[i];
+        centerBottomChart.data.datasets[i].backgroundColor = newColors[i];
+    }
     leftTopChart.update();
     leftBottomChart.update();
+    centerTopChart.update();
+    centerBottomChart.update();
+    rightTopChart.update();
+    rightBottomChart.update();
 }
 
 function clickHandler(evt) {
