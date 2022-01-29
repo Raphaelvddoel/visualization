@@ -7,6 +7,8 @@ var dataDefaultChart = [0,0,0,0,0,0];
 var dataWeatherChart = [0,0,0,0,0,0,0,0,0];
 var dataUserChart = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 var dataConditionChart = [0,0,0,0,0,0,0,0,0,0];
+var noneConditions = 0;
+var filteredItems = 0;
 
 var dataAgeChart1 = [0,0,0,0,0,0,0,0,0,0,0];
 var dataAgeChart2 = [0,0,0,0,0,0,0,0,0,0,0];
@@ -15,6 +17,13 @@ var dataAgeChart4 = [0,0,0,0,0,0,0,0,0,0,0];
 var dataAgeChart5 = [0,0,0,0,0,0,0,0,0,0,0];
 var dataAgeChart6 = [0,0,0,0,0,0,0,0,0,0,0];
 
+var dataTimeChart1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var dataTimeChart2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var dataTimeChart3 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var dataTimeChart4 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var dataTimeChart5 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var dataTimeChart6 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
 
 //config variable declaration
 var defaultChart;
@@ -22,6 +31,7 @@ var weatherChart;
 var userChart;
 var conditionChart;
 var ageChart;
+var timeChart;
 
 //Chart objects
 var leftTopChart;
@@ -32,7 +42,7 @@ var rightTopChart;
 var rightBottomChart;
 
 var labelsWeatherType = ['Fine no high winds', 'Raining no high winds', 'Snowing no high winds', 'Fine + high winds', 'Raining + high winds', 'Snowing + high winds', 'Fog or mist', 'Other', 'Unknown'];
-var labelsConditions = ['None', 'Auto traffic signal - out', 'Auto signal part defective', 'Road sign or marking defective or obscured', 'Roadworks', 'Road surface defective', 'Oil or diesel', 'Mud', 'Data missing or out of range', 'unknown (self reported)'];
+var labelsConditions = ['Auto traffic signal - out', 'Auto signal part defective', 'Road sign or marking defective or obscured', 'Roadworks', 'Road surface defective', 'Oil or diesel', 'Mud', 'Data missing or out of range', 'unknown (self reported)'];
 //selectorlists 
 var labelIdList = [0,1,2,3,4,5,8,9,10,11,16,17,18,19,20,21,22,23,90,97,98];
 //Colorlists
@@ -44,6 +54,28 @@ var colorList = [regList, proList, deuList, triList];
 
 //labels for charts
 var labels1 = ["Motorway", "A(M)", "A", "B", "C", "Unclassified"]; // in dataset 1,2,3,4,5,6
+var labels2Default = ['Pedestrian', 
+'Cyclist',
+'Motorcycle 50cc and under rider or passenger',
+'Motorcycle 125cc and under rider or passenger',
+'Motorcycle over 125cc and up to 500cc rider or  passenger',
+'Motorcycle over 500cc rider or passenger',
+'Taxi/Private hire car occupant',
+'Car occupant',
+'Minibus (8 - 16 passenger seats) occupant',
+'Bus or coach occupant (17 or more pass seats)',
+'Horse rider',
+'Agricultural vehicle occupant',
+'Tram occupant',
+'Van / Goods vehicle (3.5 tonnes mgw or under) occupant',
+'Goods vehicle (over 3.5t. and under 7.5t.) occupant',
+'Goods vehicle (7.5 tonnes mgw and over) occupant',
+'Mobility scooter rider',
+'Electric motorcycle rider or passenger',
+'Other vehicle occupant',
+'Motorcycle - unknown cc rider or passenger',
+'Goods vehicle (unknown weight) occupant'];
+
 var labels2 = ['Pedestrian', 
 'Cyclist',
 'Motorcycle 50cc and under rider or passenger',
@@ -76,8 +108,9 @@ var labelsAgeChart = ["0 - 5",
 "46 - 55",
 "56 - 65",
 "66 - 75",
-"Over 75",
-]
+"Over 75"]
+
+var labelsTimeChart = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'];
 
 function getIndex(item){
     const items = ["Accident_Index","Location_Easting_OSGR","Location_Northing_OSGR","Longitude","Latitude",
@@ -101,11 +134,12 @@ init();
 async function init() {
     await getData();
     await calcData();
-    updateChart('chartLeftTop');
-    updateChart('chartLeftBottom');
-    updateChart('chartCenterBottom');
-    updateChart('chartRightTop');
-    updateChart('chartRightBottom');
+    setChart('chartLeftTop');
+    setChart('chartLeftBottom');
+    setChart('chartCenterTop');
+    setChart('chartCenterBottom');
+    setChart('chartRightTop');
+    setChart('chartRightBottom');
     
 }
 /* data functions */
@@ -122,6 +156,7 @@ function calcData() {
     setDataUserChart();
     setDataConditionChart();
     setDataAgeChart();
+    setDataTimeChart();
 }
 
 function setDataDefaultChart() {
@@ -166,6 +201,23 @@ function setDataUserChart(roadclass) {
             dataUserChart[labelIdList.indexOf(parseInt(casualty_type))]++;
         });
     }
+
+    var sum = 0;
+    dataUserChart.forEach( elem => {
+        sum+=elem;
+    });
+    deleteIndexes = [];
+    dataUserChart.forEach( (elem, index) => {
+        let p = parseInt(elem/sum*100);
+        if (p == 0) {
+            deleteIndexes.push(index); 
+            filteredItems+=elem;
+        }
+    });
+    for (let i = deleteIndexes.length-1; i != -1; i--) {
+        dataUserChart.splice(deleteIndexes[i], 1);
+        labels2.splice(deleteIndexes[i], 1);
+    }
 }
 
 function setDataConditionChart(roadclass) {
@@ -178,7 +230,11 @@ function setDataConditionChart(roadclass) {
                     if (Condition_at_site == -1) {
                         Condition_at_site = 8;
                     }
-                    dataConditionChart[parseInt(Condition_at_site)]++;
+                    if (Condition_at_site == 0) {
+                        noneConditions++;
+                    } else {
+                        dataConditionChart[parseInt(Condition_at_site)-1]++;
+                    }
                 }
             }
         });
@@ -190,7 +246,11 @@ function setDataConditionChart(roadclass) {
                 if (Condition_at_site == -1) {
                     Condition_at_site = 8;
                 }
-                dataConditionChart[parseInt(Condition_at_site)]++;
+                if (Condition_at_site == 0) {
+                    noneConditions++;
+                } else {
+                    dataConditionChart[parseInt(Condition_at_site)-1]++;
+                }
             }
         });
     }
@@ -233,7 +293,6 @@ function setDataAgeChart(roadclass) {
                     }
                 }
             }
-            //dataUserChart[labelIdList.indexOf(parseInt(casualty_type))]++;
         });
     }
 }
@@ -253,8 +312,38 @@ function testing() {
     console.log("nope: " + n);
 }
 /* end of data function */
+function setDataTimeChart() {
+    table.forEach(row => {
+        let columns = row.split(','); 
+        const time = parseInt(columns[11].substring(0,2));
+        if (time > -1 && time < 25) {
+            const road_class = parseInt(columns[14]);
+            if (road_class < 4) {
+                if (road_class < 2) {
+                    if (road_class == 1) {
+                        dataTimeChart1[parseInt(time)]++;
+                    } else {
+                        dataTimeChart2[parseInt(time)]++;
+                    }
+                } else {
+                    dataTimeChart3[parseInt(time)]++;
+                }
+            } else {
+                if (road_class < 6) {
+                    if (road_class < 5) {
+                        dataTimeChart4[parseInt(time)]++;
+                    } else {
+                        dataTimeChart5[parseInt(time)]++;
+                    }
+                } else {
+                    dataTimeChart6[parseInt(time)]++;
+                }
+            }
+        }
+    });
+}
 
-function updateChart(canvas) {
+function setChart(canvas) {
     var ctx = document.getElementById(canvas).getContext("2d");
     var temp;
     if (canvas == 'chartLeftTop') {
@@ -269,11 +358,12 @@ function updateChart(canvas) {
         }
         temp = jQuery.extend(true, {}, userChart);
         leftBottomChart = new Chart(ctx, temp);
+        document.getElementById("filtedUsers").innerHTML = "Number of accidents filtered: " + filteredItems;
     } else if (canvas == 'chartCenterTop') {
         if (centerTopChart) {
             centerTopChart.destroy();
         }
-        temp = jQuery.extend(true, {}, weatherChart);
+        temp = jQuery.extend(true, {}, timeChart);
         centerTopChart = new Chart(ctx, temp);
     } else if (canvas == 'chartCenterBottom') {
         if (centerBottomChart) {
@@ -293,6 +383,7 @@ function updateChart(canvas) {
         }
         temp = jQuery.extend(true, {}, conditionChart);
         rightBottomChart = new Chart(ctx, temp);
+        document.getElementById("normalConditionInfo").innerHTML = "Number of accidents with no special condition: " + noneConditions;
     } 
 }
 
@@ -456,51 +547,143 @@ ageChart = {
       datasets: [{ 
             data: dataAgeChart1,
             label: "Motorway",
-            borderColor: "#3e95cd",
+            borderColor: regList[0],
             fill: false
         }, { 
             data: dataAgeChart2,
             label: "A(M)",
-            borderColor: "#8e5ea2",
+            borderColor: regList[1],
             fill: false
         }, { 
             data: dataAgeChart3,
             label: "A",
-            borderColor: "#3cba9f",
+            borderColor: regList[2],
             fill: false
         }, { 
             data: dataAgeChart4,
             label: "B",
-            borderColor: "#e8c3b9",
+            borderColor: regList[3],
             fill: false
         }, { 
             data: dataAgeChart5,
             label: "C",
-            borderColor: "#c45850",
+            borderColor: regList[4],
             fill: false
         }, { 
             data: dataAgeChart6,
             label: "Unclassified",
-            borderColor: "rgba(213,60,68,1)",
+            borderColor: regList[5],
             fill: false
         }
       ]
     },
     options: {
-      maintainAspectRatio: false
+      maintainAspectRatio: false,
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Age'
+          }
+        },
+        y: {
+          stacked: true,
+          title: {
+            display: true,
+            text: 'Number of accidents'
+          }
+        }
+      }
     }
 }
 
+timeChart = {
+    type: 'line',
+    data: {
+        labels: labelsTimeChart,
+        datasets: [{ 
+              data: dataTimeChart1,
+              label: "Motorway",
+              borderColor: regList[0],
+              backgroundColor: regList[0],
+              fill: true
+          }, { 
+              data: dataTimeChart2,
+              label: "A(M)",
+              borderColor: regList[1],
+              backgroundColor: regList[1],
+              fill: true
+          }, { 
+              data: dataTimeChart3,
+              label: "A",
+              borderColor: regList[2],
+              backgroundColor: regList[2],
+              fill: true
+          }, { 
+              data: dataTimeChart4,
+              label: "B",
+              borderColor: regList[3],
+              backgroundColor: regList[3],
+              fill: true
+          }, { 
+              data: dataTimeChart5,
+              label: "C",
+              borderColor: regList[4],
+              backgroundColor: regList[4],
+              fill: true
+          }, { 
+              data: dataTimeChart6,
+              label: "Unclassified",
+              borderColor: regList[5],
+              backgroundColor: regList[5],
+              fill: true
+          }
+        ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        tooltip: {
+          mode: 'index'
+        },
+      },
+      interaction: {
+        mode: 'nearest',
+        axis: 'x',
+        intersect: false
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: 'Time'
+          }
+        },
+        y: {
+          stacked: true,
+          title: {
+            display: true,
+            text: 'Number of accidents'
+          }
+        }
+      }
+    }
+};
+
 function updateUserChart(typeChosen) {
     dataUserChart = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    labels2 = [...labels2Default];
+    filteredItems = 0;
     if (typeChosen !== undefined) {
         setDataUserChart(labels1.indexOf(typeChosen)+1);
     } else {
         setDataUserChart();
     }
     leftBottomChart.data.datasets[0].data = dataUserChart;
+    leftBottomChart.data.labels = labels2;
     leftBottomChart.update();
     updateColors();
+    document.getElementById("filtedUsers").innerHTML = "Number of accidents filtered: " + filteredItems;
 }
 
 function updateWeatherChart(typeChosen) {
@@ -517,6 +700,7 @@ function updateWeatherChart(typeChosen) {
 
 function updateConditionChart(typeChosen) {
     dataConditionChart = [0,0,0,0,0,0,0,0,0,0];
+    noneConditions = 0;
     if (typeChosen !== undefined) {
         setDataConditionChart(labels1.indexOf(typeChosen)+1);
     } else {
@@ -525,6 +709,7 @@ function updateConditionChart(typeChosen) {
     rightBottomChart.data.datasets[0].data = dataConditionChart;
     rightBottomChart.update();
     updateColors();
+    document.getElementById("normalConditionInfo").innerHTML = "Number of accidents with no special condition: " + noneConditions;
 }
 
 function resetCharts() {

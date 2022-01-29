@@ -7,38 +7,32 @@ body {
     text-align: center;
 }
 
-canvas {
+.chartColumn, canvas {
     background-color: #ffffff;
 }
 
-.headerBar {
-    background-color: #333333;
-    padding: 5px 5px 10px 5px;
-    margin-bottom: 15px;
-    color: #ffffff;
+#selectColor {
+    margin: 15px;
+}
+
+.btn {
+    margin-bottom: 8px;
 }
 .visTitle {
     background-color: #008cba;
     padding: 5px;
     margin-bottom: 0;
-    border-radius: 5px 5px 0 0;
     color: white;
 }
 
+#centerBottomChart {
+    margin-top: 125px;
+}
+
 #footer {
-    position: absolute;
-    display:table;
+    margin-top: 25px;
     width: 100%;
-    bottom: 0;
-    left: 0;
     background-color: #D3D3D3;
     padding: 10px;
-} 
-.footer-text {
-    display:table-cell;
-    vertical-align:middle;
-    text-align:center;
-}
-.footer-text p {
-    margin-bottom: 0;
+    text-align: center;
 }
