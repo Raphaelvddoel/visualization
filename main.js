@@ -632,22 +632,31 @@ ageChart = {
       ]
     },
     options: {
-      maintainAspectRatio: false,
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Age'
-          }
+        maintainAspectRatio: false,
+        scales: {
+            x: {
+            title: {
+                display: true,
+                text: 'Age'
+            }
+            },
+            y: {
+                stacked: true,
+                title: {
+                    display: true,
+                    text: 'Number of accidents'
+                }
+            }
         },
-        y: {
-          stacked: true,
-          title: {
-            display: true,
-            text: 'Number of accidents'
-          }
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    afterTitle: function() {
+                        return 'number of accidents:';
+                    }
+                }
+            }
         }
-      }
     }
 }
 
@@ -706,9 +715,11 @@ timeChart = {
                         let label = context[0].label || '';
                         label+= ":00h"
                         return label;
+                    }, 
+                    afterTitle: function() {
+                        return 'number of accidents:';
                     }
                 }
-                
             },
         },
         interaction: {
