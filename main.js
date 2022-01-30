@@ -452,6 +452,22 @@ defaultChart = {
             line: {
                 tension: 0.4
             }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        if (context.formattedValue !== null) {
+                            label += context.formattedValue + ' accidents'; 
+                        }
+                        return label;
+                    }
+                }
+            }
         }
 
     }
