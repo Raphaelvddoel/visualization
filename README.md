@@ -1,5 +1,5 @@
 # VizTech
-VizTech visualizes the data set "Great Britain Road Safety Data" from 2018 with a focus on road classes. 
+VizTech visualizes the data set "Great Britain Road Safety Data". It contains data on the circumstances of road accidents in Great Britain from 1979, and multiple information on the vehicles and actors involved in the accidents.
 ## Usage
 go to [raphaelvddoel.github.io/visualization](https://raphaelvddoel.github.io/visualization) or download this repository and open index.html. An internet connection is required when running the code locally.
 
