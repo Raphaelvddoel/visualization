@@ -633,30 +633,31 @@ timeChart = {
         ]
     },
     options: {
-      responsive: true,
-      plugins: {
-        tooltip: {
-          mode: 'index'
+        maintainAspectRatio: false,
+        responsive: true,
+        plugins: {
+            tooltip: {
+            mode: 'index'
         },
-      },
-      interaction: {
-        mode: 'nearest',
-        axis: 'x',
-        intersect: false
-      },
-      scales: {
-        x: {
-          title: {
-            display: true,
-            text: 'Time'
-          }
+        },
+        interaction: {
+            mode: 'nearest',
+            axis: 'x',
+            intersect: false
+        },
+        scales: {
+            x: {
+            title: {
+                display: true,
+                text: 'Time'
+            }
         },
         y: {
-          stacked: true,
-          title: {
-            display: true,
-            text: 'Number of accidents'
-          }
+            stacked: true,
+            title: {
+                display: true,
+                text: 'Number of accidents'
+            }
         }
       }
     }
