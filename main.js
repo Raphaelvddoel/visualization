@@ -469,7 +469,6 @@ defaultChart = {
                 }
             }
         }
-
     }
 }
 
@@ -499,6 +498,22 @@ weatherChart = {
                 tension: 0.4
             }
         },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        if (context.formattedValue !== null) {
+                            label += context.formattedValue + ' accidents'; 
+                        }
+                        return label;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -508,7 +523,6 @@ userChart = {
         labels: labelsUserTypes,
         datasets: [
             {
-            label: "Number of accidents",
             backgroundColor: regList,
             data: dataUserChart,
             }
@@ -516,7 +530,23 @@ userChart = {
     },
     options: {
         maintainAspectRatio: false,
-    }
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        if (context.formattedValue !== null) {
+                            label += context.formattedValue + ' accidents'; 
+                        }
+                        return label;
+                    }
+                }
+            }
+        }
+    },
 }
 
 conditionChart = {
@@ -545,6 +575,22 @@ conditionChart = {
                 tension: 0.4
             }
         },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        let label = context.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        if (context.formattedValue !== null) {
+                            label += context.formattedValue + ' accidents'; 
+                        }
+                        return label;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -653,8 +699,17 @@ timeChart = {
         responsive: true,
         plugins: {
             tooltip: {
-            mode: 'index'
-        },
+                mode: 'index',
+                callbacks: {
+                    title: function(context) { 
+                        console.log(context);
+                        let label = context[0].label || '';
+                        label+= ":00h"
+                        return label;
+                    }
+                }
+                
+            },
         },
         interaction: {
             mode: 'nearest',
