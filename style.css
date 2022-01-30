@@ -28,6 +28,11 @@ body {
 #centerBottomChart {
     margin-top: 25px;
 }
+
+#leftTopChart {
+    cursor: pointer;
+}
+
 #footer {
     margin-top: 25px;
     width: 100%;
