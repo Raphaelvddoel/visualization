@@ -703,6 +703,7 @@ function updateConditionChart(typeChosen) {
     rightBottomChart.update();
     updateColors();
     document.getElementById("normalConditionInfo").innerHTML = "Number of accidents with no special condition: " + noneConditions;
+    updateColors();
 }
 
 // Load charts using all road types
