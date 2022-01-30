@@ -649,7 +649,7 @@ timeChart = {
             x: {
             title: {
                 display: true,
-                text: 'Time'
+                text: 'Time of day (hours)'
             }
         },
         y: {
