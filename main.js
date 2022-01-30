@@ -388,6 +388,7 @@ function updateLeftBottomChartType() {
     temp = jQuery.extend(true, {}, userChart);
     temp.type = type;
     leftBottomChart = new Chart(ctx, temp);
+    updateColors();
 }
 
 // Change chart type from pie to bar or vice versa
@@ -405,6 +406,7 @@ function updateRightTopChartType() {
     temp = jQuery.extend(true, {}, weatherChart);
     temp.type = type;
     rightTopChart = new Chart(ctx, temp);
+    updateColors();
 }
 
 // Change chart type from pie to bar or vice versa
@@ -422,6 +424,7 @@ function updateRightBottomChartType() {
     temp = jQuery.extend(true, {}, conditionChart);
     temp.type = type;
     rightBottomChart = new Chart(ctx, temp);
+    updateColors();
 }
 
 // --------- Start of chart variables ---------
@@ -703,7 +706,6 @@ function updateConditionChart(typeChosen) {
     rightBottomChart.update();
     updateColors();
     document.getElementById("normalConditionInfo").innerHTML = "Number of accidents with no special condition: " + noneConditions;
-    updateColors();
 }
 
 // Load charts using all road types
