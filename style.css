@@ -16,7 +16,7 @@ body {
 }
 
 .btn {
-    margin-bottom: 8px;
+    margin: 8px;
 }
 .visTitle {
     background-color: #008cba;
@@ -26,7 +26,7 @@ body {
 }
 
 #centerBottomChart {
-    margin-top: 125px;
+    margin-top: 150px;
 }
 
 #footer {
