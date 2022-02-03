@@ -387,6 +387,7 @@ function updateLeftBottomChartType() {
     }
     temp = jQuery.extend(true, {}, userChart);
     temp.type = type;
+    temp.data.datasets[0].data = dataUserChart;
     leftBottomChart = new Chart(ctx, temp);
     updateColors();
 }
@@ -405,6 +406,7 @@ function updateRightTopChartType() {
     }
     temp = jQuery.extend(true, {}, weatherChart);
     temp.type = type;
+    temp.data.datasets[0].data = dataWeatherChart;
     rightTopChart = new Chart(ctx, temp);
     updateColors();
 }
@@ -423,6 +425,7 @@ function updateRightBottomChartType() {
     }
     temp = jQuery.extend(true, {}, conditionChart);
     temp.type = type;
+    temp.data.datasets[0].data = dataConditionChart;
     rightBottomChart = new Chart(ctx, temp);
     updateColors();
 }
@@ -711,7 +714,6 @@ timeChart = {
                 mode: 'index',
                 callbacks: {
                     title: function(context) { 
-                        console.log(context);
                         let label = context[0].label || '';
                         label+= ":00h"
                         return label;
