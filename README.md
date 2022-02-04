@@ -1,7 +1,7 @@
 # VizTech
 VizTech visualizes the data set "Great Britain Road Safety Data". In this dataset, information is provided on the circumstances of road accidents in Great Britain from 1979, as well as information about the vehicles and individuals involved in the accidents. VizTech has been built as a means to visually analyze this road and accident data to uncover some of the most contributing causes to these accidents. In comparison to a data analytical and statistical approach, visualizing this data gives an extremely quick and easy overview of just how big of a role these leading conditions play in accidents. To reach our goal, we have integrated bar charts, pie charts, stream graphs, as well as stacked line charts into our tool, each equipped with interaction techniques. Javascript was used to process the dataset and facilitate easy use and Chart.js was used to make the visualizations.
 ## Usage
-go to [raphaelvddoel.github.io/visualization](https://raphaelvddoel.github.io/visualization) or download this repository and open index.html. An internet connection is required when running the code locally.
+Go to [raphaelvddoel.github.io/visualization](https://raphaelvddoel.github.io/visualization) or download this repository and open index.html. An internet connection is required when running the code locally.
 
 After having loaded the visualization tool, multiple charts appear. A color selector can be used to change the colors in which the charts are encoded. This ensures that e.g. red-blind users can still use this tool.
 
