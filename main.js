@@ -42,13 +42,6 @@ var centerBottomChart;
 var rightTopChart;
 var rightBottomChart;
 
-//Colorlists
-var regList = ['rgba(102,144,252,1)', 'rgba(120,96,237,1)', 'rgba(218,36,127,1)', 'rgba(252,95,27,1)', 'rgba(253,175,37,1)', 'rgba(189,234,179,1)'];
-var proList = ['rgba(96,144,252,1)','rgba(19,115,234,1)','rgba(102,116,165,1)','rgba(165,146,36,1)','rgba(214,189,41,1)','rgba(235,220,172,1)'];
-var deuList = ['rgba(235,220,172,1)','rgba(18,122,204,1)','rgba(131,113,113,1)','rgba(186,138,25,1)','rgba(242,179,36,1)','rgba(254,213,186,1)'];
-var triList = ['rgba(55,161,173,1)','rgba(81,125,134,1)','rgba(213,60,68,1)','rgba(253,91,100,1)','rgba(254,165,177,1)','rgba(200,224,241,1)'];
-var colorList = [regList, proList, deuList, triList];
-
 //labels for charts
 var labelsRoadClasses = ["Motorway", "A(M)", "A", "B", "C", "Unclassified"]; // in dataset 1,2,3,4,5,6
 var labelsUserTypesDefault = ['Pedestrian', 
@@ -97,13 +90,16 @@ var labelsUserTypes = ['Pedestrian',
 
 var labelsWeatherType = ['Fine no high winds', 'Raining no high winds', 'Snowing no high winds', 'Fine + high winds', 'Raining + high winds', 'Snowing + high winds', 'Fog or mist', 'Other', 'Unknown'];
 var labelsConditions = ['Auto traffic signal - out', 'Auto signal part defective', 'Road sign or marking defective or obscured', 'Roadworks', 'Road surface defective', 'Oil or diesel', 'Mud', 'Data missing or out of range', 'unknown (self reported)'];
-
-//selectorlist
+var labelsAgeChart = ["0 - 5", "6 - 10", "11 - 15", "16 - 20", "21 - 25", "26 - 35", "36 - 45", "46 - 55", "56 - 65", "66 - 75", "Over 75"];
+var labelsTimeChart = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
 var labelIdList = [0,1,2,3,4,5,8,9,10,11,16,17,18,19,20,21,22,23,90,97,98];
 
-var labelsAgeChart = ["0 - 5", "6 - 10", "11 - 15", "16 - 20", "21 - 25", "26 - 35", "36 - 45", "46 - 55", "56 - 65", "66 - 75", "Over 75"];
-
-var labelsTimeChart = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
+//Colorlists
+var regList = ['rgba(102,144,252,1)', 'rgba(120,96,237,1)', 'rgba(218,36,127,1)', 'rgba(252,95,27,1)', 'rgba(253,175,37,1)', 'rgba(189,234,179,1)'];
+var proList = ['rgba(96,144,252,1)','rgba(19,115,234,1)','rgba(102,116,165,1)','rgba(165,146,36,1)','rgba(214,189,41,1)','rgba(235,220,172,1)'];
+var deuList = ['rgba(235,220,172,1)','rgba(18,122,204,1)','rgba(131,113,113,1)','rgba(186,138,25,1)','rgba(242,179,36,1)','rgba(254,213,186,1)'];
+var triList = ['rgba(55,161,173,1)','rgba(81,125,134,1)','rgba(213,60,68,1)','rgba(253,91,100,1)','rgba(254,165,177,1)','rgba(200,224,241,1)'];
+var colorList = [regList, proList, deuList, triList];
 
 //initial activation function call
 init();
@@ -128,6 +124,7 @@ async function getData(){
     table = refinedData.split('\n').slice(1);
 }
 
+//Function that calculates all data on page load
 function calcData() {
     setDataDefaultChart();
     setDataWeatherChart();
@@ -137,6 +134,7 @@ function calcData() {
     setDataTimeChart();
 }
 
+//Calculate data for default chart
 function setDataDefaultChart() {
     table.forEach( row => {
         let columns = row.split(','); 
@@ -145,8 +143,9 @@ function setDataDefaultChart() {
     });
 }
 
+//Calculate data for weather chart
 function setDataWeatherChart(roadclass) {
-    if (roadclass !== undefined) {
+    if (roadclass !== undefined) { //if function is called with parameter
         table.forEach( row => {
             let columns = row.split(','); 
             if (columns[14] == roadclass) {
@@ -163,8 +162,9 @@ function setDataWeatherChart(roadclass) {
     }
 }
 
+//Calculate data for user chart
 function setDataUserChart(roadclass) {
-    if (roadclass !== undefined) {
+    if (roadclass !== undefined) { //if function is called with parameter
         table.forEach( row => {
             let columns = row.split(','); 
             if (columns[14] == roadclass) {
@@ -192,20 +192,22 @@ function setDataUserChart(roadclass) {
             filteredItems+=elem;
         }
     });
+    //remove data and labels
     for (let i = deleteIndexes.length-1; i != -1; i--) {
         dataUserChart.splice(deleteIndexes[i], 1);
         labelsUserTypes.splice(deleteIndexes[i], 1);
     }
 }
 
+//Calculate data for condition chart
 function setDataConditionChart(roadclass) {
-    if (roadclass !== undefined) {
+    if (roadclass !== undefined) { //if function is called with parameter
         table.forEach( row => {
             let columns = row.split(','); 
             if (columns[14] == roadclass) {
                 var Condition_at_site = columns[27];
                 if ((Condition_at_site > -2 && Condition_at_site < 10)) { // filter out missing data
-                    if (Condition_at_site == -1) {
+                    if (Condition_at_site == -1) { // -1 is not a valid index and 8 is not used, so replace -1 by 8
                         Condition_at_site = 8;
                     }
                     if (Condition_at_site == 0) {
@@ -221,7 +223,7 @@ function setDataConditionChart(roadclass) {
             let columns = row.split(','); 
             var Condition_at_site = columns[27];
             if ((Condition_at_site > -2 && Condition_at_site < 10)) { //filter out missing data
-                if (Condition_at_site == -1) {
+                if (Condition_at_site == -1) { // -1 is not a valid index and 8 is not used, so replace -1 by 8
                     Condition_at_site = 8;
                 }
                 if (Condition_at_site == 0) {
@@ -234,8 +236,9 @@ function setDataConditionChart(roadclass) {
     }
 }
 
+//Calculate data for age chart
 function setDataAgeChart(roadclass) {
-    if (roadclass !== undefined) {
+    if (roadclass !== undefined) { //if function is called with parameter
         table.forEach( row => {
             let columns = row.split(','); 
             if (columns[14] == roadclass) {
@@ -275,8 +278,7 @@ function setDataAgeChart(roadclass) {
         });
     }
 }
-
-/* end of data function */
+//Calculate data for time chart
 function setDataTimeChart() {
     table.forEach(row => {
         let columns = row.split(','); 
@@ -308,6 +310,7 @@ function setDataTimeChart() {
         }
     });
 }
+/* end of data function */
 
 /**
  * universal function to make all charts
@@ -786,19 +789,23 @@ function resetCharts() {
 
 // Update colors of all charts after changing color selector
 function updateColors() {
+    //get new color set
     let selectColor  = document.getElementById('selectColor');
     let colorChosen = selectColor.selectedIndex;
     let newColors = colorList[colorChosen];
+    //Set new colors for side charts
     leftTopChart.data.datasets[0].backgroundColor = newColors;
     leftBottomChart.data.datasets[0].backgroundColor = newColors;
     rightTopChart.data.datasets[0].backgroundColor = newColors;
     rightBottomChart.data.datasets[0].backgroundColor = newColors;
+    //Set new colors for center charts
     for (let i = 0; i != newColors.length; i++) {
         centerTopChart.data.datasets[i].borderColor = newColors[i];
         centerTopChart.data.datasets[i].backgroundColor = newColors[i];
         centerBottomChart.data.datasets[i].borderColor = newColors[i];
         centerBottomChart.data.datasets[i].backgroundColor = newColors[i];
     }
+    //Update all charts
     leftTopChart.update();
     leftBottomChart.update();
     centerTopChart.update();
@@ -810,11 +817,9 @@ function updateColors() {
 // actionHandler for clicking default chart
 function clickHandler(evt) {
     const points = leftTopChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
-
     if (points.length) {
         const firstPoint = points[0];
         const label = leftTopChart.data.labels[firstPoint.index];
-        //const value = leftTopChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
         updateWeatherChart(label);
         updateUserChart(label);
         updateConditionChart(label);
